@@ -1,31 +1,35 @@
+import ArticleCard from "@/components/article-card";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+
 export default function DashboardPage() {
     return (
-        <div className="flex flex-col items-center justify-start w-full h-screen">
+        <div className="flex flex-col items-center justify-start w-full">
             <header className="relative flex flex-col items-center justify-center w-full">
-                <img src="/images/headerdash.jpg" alt="header background" className="absolute top-0 w-full h-[700px] object-cover"/>
-                <div className="absolute top-0 w-full h-[700px] bg-[#2563EB] opacity-85"/>
+                <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[100px] w-full h-[600px] object-cover lg:top-0 lg:h-[700px]"/>
+                <div className="absolute top-[100px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[700px]"/>
 
                 <div className="absolute top-0 flex flex-row items-center justify-between w-full h-[100px] px-[4%]">
-                    <img src="/images/logo-white.png" alt="logo" className="w-[150px]"/>
+                    <img src="/images/logo-white.png" alt="logo" className="hidden lg:flex w-[150px]"/>
+                    <img src="/images/logo-black.png" alt="logo" className="lg:hidden w-[125px]"/>
 
                     <div className="flex flex-row items-center justify-center">
                         <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
-                        <p className="ml-4 text-xl text-white underline">James bond</p>
+                        <p className="hidden lg:flex ml-4 text-xl text-white underline">James bond</p>
                     </div>
 
                 </div>
 
-                <div className="flex flex-col items-center justify-center w-[45%] h-[600px] mt-[100px] text-white text-center z-10">
+                <div className="flex flex-col items-center justify-center w-[95%] h-[600px] mt-[100px] text-white text-center z-10 lg:w-[45%]">
                     <p className="text-lg">Blog Genzet</p>
-                    <p className="mt-4 text-6xl">The Journal: Design Resources, Interviews, and Industry News</p>
-                    <p className="mt-6 text-3xl font-thin">Your daily dose of design insight!</p>
+                    <p className="mt-4 text-5xl lg:text-6xl">The Journal: Design Resources, Interviews, and Industry News</p>
+                    <p className="mt-6 text-xl font-thin lg:text-3xl">Your daily dose of design insight!</p>
 
                     {/* sizedbox for padding */}
                     <div className="h-[50px]"/>
 
-                    <div className="flex items-center justify-center w-full h-[60px] px-3 bg-[#3B82F6] rounded-xl">
-                        <form className="flex flex-row items-center justify-center gap-3 w-full">
-                            <div className="flex items-center justify-center w-[30%] h-[40px] px-3 bg-white rounded-lg">
+                    <div className="flex items-center justify-center w-full h-[120px] px-3 bg-[#3B82F6] rounded-xl lg:h-[60px]">
+                        <form className="flex flex-col items-center justify-center gap-3 w-full lg:flex-row">
+                            <div className="flex items-center justify-center w-full h-[40px] px-3 bg-white rounded-lg lg:w-[30%]">
                                 <select className="w-full text-black bg-transparent">
                                     <option value="contoh">contoh</option>
                                     <option value="contoh">contoh</option>
@@ -40,8 +44,50 @@ export default function DashboardPage() {
                         </form>
                     </div>
                 </div>
-
             </header>
+
+            {/* sizedbox for padding */}
+            <div className="h-[50px]"/>
+
+            <main className="flex flex-col items-center justify-center w-[85%]">
+                <p className="w-full mb-6">Showing: 20 of 40 articles</p>
+                <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+                    {
+                        Array.from({length: 9}, (_, index) => (
+                            <ArticleCard key={index}/>
+                        ))
+                    }
+                </div>
+
+                {/* sizedbox for padding */}
+                <div className="h-[50px]"/>
+
+                <div className="flex flex-row items-center justify-center">
+                    <div className="flex flex-row items-center justify-center w-[100px]">
+                        <LuChevronLeft size={20} className="mr-2"/>
+                        <p className="font-semibold">Previous</p>
+                    </div>
+
+                    <div className="flex flex-row items-center justify-center lg:w-[200px]">
+                        <div className="flex items-center justify-center w-[50px] h-[50px]">1</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">2</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px]">3</div>
+                    </div>
+
+                    <div className="flex flex-row items-center justify-center w-[100px]">
+                        <p className="font-semibold">Next</p>
+                        <LuChevronRight size={20} className="ml-2"/>
+                    </div>
+                </div>
+            </main>
+
+            {/* sizedbox for padding */}
+            <div className="h-[75px]"/>
+
+            <footer className="flex flex-col items-center justify-center w-full h-[100px] bg-[#2563EB] opacity-85 lg:flex-row">
+                <img src="/images/logo-white.png" alt="logo" className="w-[125px] mb-2 lg:w-[150px] lg:mb-0"/>
+                <p className="ml-4 text-sm text-white lg:text-base">@ 2025 Blog genzet. All right reserved.</p>
+            </footer>
         </div>
     );
 }

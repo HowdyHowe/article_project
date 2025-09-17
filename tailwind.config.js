@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import lineClamp from "@tailwindcss/line-clamp"
 
 module.exports = {
   content: [
@@ -13,5 +12,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [lineClamp],
+  plugins: [],
 }
