@@ -2,14 +2,14 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("accessToken")?.value;
-  const role = (await cookieStore).get("role")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value;
+  const role = cookieStore.get("role")?.value;
 
   try {
     if (!token) {
-      (await cookieStore).delete("accessToken");
-      (await cookieStore).delete("role");
+      cookieStore.delete("accessToken");
+      cookieStore.delete("role");
       redirect("/login");
     }
     if (role === "User") {
@@ -20,6 +20,10 @@ export default async function Home() {
     }
   } catch (err) {
     console.error("Routing Error: ", err)
+
+    cookieStore.delete("accessToken");
+    cookieStore.delete("role");
+    redirect("/login");
   }
 
   return (
