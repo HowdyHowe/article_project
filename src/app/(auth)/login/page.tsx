@@ -14,14 +14,14 @@ export default function LoginPage() {
 
            <form className="flex flex-col w-[90%]">
                 <label className="text-lg font-semibold">Username</label>
-                <input type="text" className="w-full h-[50px] p-3 border-[2px] rounded-lg placeholder:text-[#64748B] focus:outline-none focus:ring-0 resize-none" placeholder="Input Username"/>
+                <input type="text" className="w-full h-[50px] p-3 border-[2px] rounded-lg placeholder:text-[#64748B]" placeholder="Input Username"/>
 
                 {/* sizedbox for padding */}
                 <div className="h-[15px]"/>
 
                 <label className="text-lg font-semibold">Password</label>
                 <div className="flex flex-row items-center w-full h-[50px] border-[2px] rounded-lg">
-                    <input type={visible ? "text": "password"} className="w-full h-full p-3 bg-transparent placeholder:text-[#64748B] focus:outline-none focus:ring-0 resize-none" placeholder="Input Password"/>
+                    <input type={visible ? "text": "password"} className="w-full h-full p-3 bg-transparent placeholder:text-[#64748B]" placeholder="Input Password"/>
                     <div className="m-3" onClick={
                         () => setVisible(!visible)
                     }>
