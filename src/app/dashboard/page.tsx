@@ -1,7 +1,7 @@
 export default function DashboardPage() {
     return (
-        <div className="flex items-center justify-center w-full h-screen text-2xl font-semibold">
-            \
+        <div className="grid grid-cols-3 gap-6 w-[90%] h-screen ">
+            /
         </div>
     );
 }
