@@ -1,7 +1,7 @@
-export default function ArticlePage(children: React.ReactNode) {
+export default function ArticlePage() {
     return (
         <div>
-            {children}
+            Article Page
         </div>
     );
 }

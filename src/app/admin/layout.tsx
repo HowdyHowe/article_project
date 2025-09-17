@@ -1,6 +1,6 @@
 export default function LayoutAdmin({ children }: { children: React.ReactNode }) {
     return (
-        <div>
+        <div  className="flex items-center justify-center w-full h-screen text-2xl font-semibold">
             {children}
         </div>
     );

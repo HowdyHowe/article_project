@@ -7,8 +7,8 @@ const archivo = Archivo({
 })
 
 export const metadata: Metadata = {
-    title: "hometest_frontend",
-    description: "An interview test for frontend dev job."
+    title: "article.toba.dev",
+    description: "Website for news and article."
 }
 
 export default function RootLayout({
