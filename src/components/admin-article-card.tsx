@@ -2,7 +2,7 @@ export default function AdminArticleCard() {
     return (
         <div className="grid grid-cols-5 w-full h-[75px] border-b-[2px]">
             <div className="flex items-center justify-center">
-                <img src="/images/headerdash.jpg" className="w-[55px] h-[55px] rounded-md"/>
+                <img src="/images/headerdash.jpg" className="w-[55px] h-[55px] rounded-md object-cover"/>
             </div>
 
             <div className="flex items-center justify-start w-full px-4">

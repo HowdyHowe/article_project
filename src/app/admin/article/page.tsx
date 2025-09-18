@@ -1,3 +1,5 @@
+import AdminArticleCard from "@/components/admin-article-card";
+
 export default function AdminArticlePage() {
     return (
         <div className="flex flex-col items-center justify-center w-full h-full bg-[#F3F4F6]">
@@ -30,6 +32,15 @@ export default function AdminArticlePage() {
                     <p className="flex items-center justify-center font-semibold">Category</p>
                     <p className="flex items-center justify-center font-semibold">Created At</p>
                     <p className="flex items-center justify-center font-semibold">Action</p>
+                </div>
+
+                <div className="grid grid-cols-1 w-full h-full overflow-y-scroll">
+                    {
+                        Array.from({length: 10}, (_, index) =>
+                            <AdminArticleCard key={index}/>
+                        )
+                    }
+
                 </div>
             </div>
         </div>
