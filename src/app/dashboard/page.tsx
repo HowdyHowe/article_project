@@ -5,16 +5,16 @@ export default function DashboardPage() {
     return (
         <div className="flex flex-col items-center justify-start w-full">
             <header className="relative flex flex-col items-center justify-center w-full">
-                <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[100px] w-full h-[600px] object-cover lg:top-0 lg:h-[700px]"/>
-                <div className="absolute top-[100px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[700px]"/>
+                <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[75px] w-full h-[600px] object-cover lg:top-0 lg:h-[700px]"/>
+                <div className="absolute top-[75px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[700px]"/>
 
-                <div className="absolute top-0 flex flex-row items-center justify-between w-full h-[100px] px-[4%]">
+                <div className="absolute top-0 flex flex-row items-center justify-between w-full h-[75px] px-[4%] lg:h-[125px]">
                     <img src="/images/logo-white.png" alt="logo" className="hidden lg:flex w-[150px]"/>
                     <img src="/images/logo-black.png" alt="logo" className="lg:hidden w-[125px]"/>
 
-                    <div className="flex flex-row items-center justify-center">
+                    <div className="flex flex-row items-center justify-center cursor-pointer">
                         <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
-                        <p className="hidden lg:flex ml-4 text-xl text-white underline">James bond</p>
+                        <p className="hidden lg:flex ml-4 text-lg text-white underline">James bond</p>
                     </div>
 
                 </div>
@@ -51,7 +51,7 @@ export default function DashboardPage() {
 
             <main className="flex flex-col items-center justify-center w-[85%]">
                 <p className="w-full mb-6">Showing: 20 of 40 articles</p>
-                <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-14 lg:grid-cols-3">
                     {
                         Array.from({length: 9}, (_, index) => (
                             <ArticleCard key={index}/>
@@ -84,9 +84,9 @@ export default function DashboardPage() {
             {/* sizedbox for padding */}
             <div className="h-[75px]"/>
 
-            <footer className="flex flex-col items-center justify-center w-full h-[100px] bg-[#2563EB] opacity-85 lg:flex-row">
-                <img src="/images/logo-white.png" alt="logo" className="w-[125px] mb-2 lg:w-[150px] lg:mb-0"/>
-                <p className="ml-4 text-sm text-white lg:text-base">@ 2025 Blog genzet. All right reserved.</p>
+            <footer className="flex flex-col items-center justify-center w-full h-[75px] bg-[#2563EB] opacity-85 lg:flex-row lg:h-[100px]">
+                <img src="/images/logo-white.png" alt="logo" className="w-[110px] mb-1 lg:w-[150px] lg:mb-0"/>
+                <p className="ml-4 text-xs text-white lg:text-base">@ 2025 Blog genzet. All right reserved.</p>
             </footer>
         </div>
     );
