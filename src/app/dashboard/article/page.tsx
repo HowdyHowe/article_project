@@ -1,3 +1,4 @@
+import AdminArticleCard from "@/components/admin-article-card";
 import ArticleCard from "@/components/article-card";
 
 export default function ArticlePage() {
@@ -13,9 +14,9 @@ export default function ArticlePage() {
             {/* sizedbox for padding */}
             <div className="h-[30px]"/>
 
-            <div className="flex items-center justify-start w-[85%]">
+            <article className="flex items-center justify-start w-[85%]">
                 <p>contoh isi</p>
-            </div>
+            </article>
 
             {/* sizedbox for padding */}
             <div className="h-[50px]"/>
