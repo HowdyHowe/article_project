@@ -1,13 +1,14 @@
 import ArticleCard from "@/components/article-card";
 import AddCategoryAdminPopup from "@/components/popup/add-category-admin-popup";
 import DeleteArticlesAdminPopup from "@/components/popup/delete-articles-admin-popup";
+import EditCategoryAdminPopup from "@/components/popup/edit-category-admin-popup";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 export default function DashboardPage() {
     return (
         <div className="flex flex-col items-center justify-start w-full">
 
-            <AddCategoryAdminPopup/>
+            <EditCategoryAdminPopup/>
             <header className="relative flex flex-col items-center justify-center w-full">
                 <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[75px] w-full h-[600px] object-cover lg:top-0 lg:h-[600px]"/>
                 <div className="absolute top-[75px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[600px]"/>
