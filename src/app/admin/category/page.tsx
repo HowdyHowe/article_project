@@ -1,4 +1,3 @@
-import AdminArticleCard from "@/components/admin-article-card";
 import AdminCategoryCard from "@/components/admin-category-card";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";

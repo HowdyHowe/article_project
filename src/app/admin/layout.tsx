@@ -25,7 +25,7 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
                 </aside>
                 <div className="relative flex flex-col w-full h-full bg-[#F3F4F6]">
                     <header className="absolute top-0 flex flex-row items-center justify-between w-full min-h-[75px] px-[2%] border-b">
-                        <img src="/images/logo-black.png" alt="logo" className="w-[125px]"/>
+                        <p className="text-2xl font-semibold">Articles</p>
 
                         <div className="flex flex-row items-center justify-center cursor-pointer">
                             <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
