@@ -1,4 +1,5 @@
 import AdminArticleCard from "@/components/admin-article-card";
+import AdminCategoryCard from "@/components/admin-category-card";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 
@@ -19,13 +20,11 @@ export default function AdminCategoryPage() {
 
                     <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer">
                         <LuPlus size={20} className="mr-2"/>
-                        <p>Add Article</p>
+                        <p>Add Category</p>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-5 w-full h-[50px] bg-[#F3F4F6] border-b">
-                    <p className="flex items-center justify-center font-semibold">Thumbnail</p>
-                    <p className="flex items-center justify-center font-semibold">Title</p>
+                <div className="grid grid-cols-3 w-full h-[50px] bg-[#F3F4F6] border-b">
                     <p className="flex items-center justify-center font-semibold">Category</p>
                     <p className="flex items-center justify-center font-semibold">Created At</p>
                     <p className="flex items-center justify-center font-semibold">Action</p>
@@ -34,7 +33,7 @@ export default function AdminCategoryPage() {
                 <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
                         Array.from({length: 10}, (_, index) =>
-                            <AdminArticleCard key={index}/>
+                            <AdminCategoryCard key={index}/>
                         )
                     }
                 </div>

@@ -4,7 +4,7 @@ export default function LayoutProfile({ children }: {children: React.ReactNode})
             <header className="absolute top-0 flex flex-row items-center justify-between w-full h-[75px] px-[4%] border-b lg:h-[125px]">
                 <img src="/images/logo-black.png" alt="logo" className="w-[125px]"/>
 
-                <div className="flex flex-row items-center justify-center cursor-pointer">
+                <div className="flex flex-row items-center justify-center">
                     <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
                     <p className="hidden lg:flex ml-4 text-lg text-black underline">James bond</p>
                 </div>
