@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import scrollBar from "tailwind-scrollbar"
 
 module.exports = {
   content: [
@@ -12,5 +13,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
-}
+  plugins: [scrollBar],
+};

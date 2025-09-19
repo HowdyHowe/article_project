@@ -6,7 +6,7 @@ export default function AdminArticleCard() {
             </div>
 
             <div className="flex items-center justify-start w-full px-4">
-                <p className="w-full max-h-[3rem] line-clamp-2">Contoh Judul Artikel</p>
+                <p className="w-full max-h-[3rem] text-center line-clamp-2">Contoh Judul Artikel</p>
             </div>
 
             <div className="flex items-center justify-center w-full px-4">
