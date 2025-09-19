@@ -4,11 +4,12 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 export default function DashboardPage() {
     return (
         <div className="flex flex-col items-center justify-start w-full">
-            <header className="relative flex flex-col items-center justify-center w-full">
-                <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[75px] w-full h-[600px] object-cover lg:top-0 lg:h-[700px]"/>
-                <div className="absolute top-[75px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[700px]"/>
 
-                <div className="absolute top-0 flex flex-row items-center justify-between w-full h-[75px] px-[4%] lg:h-[125px]">
+            <header className="relative flex flex-col items-center justify-center w-full">
+                <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[75px] w-full h-[600px] object-cover lg:top-0 lg:h-[600px]"/>
+                <div className="absolute top-[75px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[600px]"/>
+
+                <div className="absolute top-0 flex flex-row items-center justify-between w-full h-[75px] px-[4%] lg:h-[100px]">
                     <img src="/images/logo-white.png" alt="logo" className="hidden lg:flex w-[150px]"/>
                     <img src="/images/logo-black.png" alt="logo" className="lg:hidden w-[125px]"/>
 
@@ -19,13 +20,13 @@ export default function DashboardPage() {
 
                 </div>
 
-                <div className="flex flex-col items-center justify-center w-[95%] h-[600px] mt-[100px] text-white text-center z-10 lg:w-[45%]">
+                <div className="flex flex-col items-center justify-center w-[95%] h-[500px] mt-[100px] text-white text-center z-10 lg:w-[45%]">
                     <p className="text-lg">Blog Genzet</p>
                     <p className="mt-4 text-5xl lg:text-6xl">The Journal: Design Resources, Interviews, and Industry News</p>
                     <p className="mt-6 text-xl font-thin lg:text-3xl">Your daily dose of design insight!</p>
 
                     {/* sizedbox for padding */}
-                    <div className="h-[50px]"/>
+                    <div className="h-[75px]"/>
 
                     <div className="flex items-center justify-center w-full h-[120px] px-3 bg-[#3B82F6] rounded-xl lg:h-[60px]">
                         <form className="flex flex-col items-center justify-center gap-3 w-full lg:flex-row">
