@@ -1,4 +1,4 @@
-export default function EditCategoryAdminPopup() {
+export default function AdminEditCategoryPopup() {
     return (
         <div className="fixed flex items-center justify-center w-full h-screen z-20">
             <div className="fixed top-0 w-full h-full bg-black opacity-50"/>

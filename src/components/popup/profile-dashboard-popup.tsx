@@ -1,6 +1,6 @@
 import { LuLogOut } from "react-icons/lu"
 
-export default function ProfileDashboardPopup() {
+export default function DashboardProfilePopup() {
     return (
         <div className="fixed flex items-center justify-center w-full h-screen z-20">
             <div className="fixed top-0 w-full h-full bg-black opacity-50"/>

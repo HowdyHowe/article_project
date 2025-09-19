@@ -1,7 +1,7 @@
 import AdminArticleCard from "@/components/admin-article-card";
 import ArticleCard from "@/components/article-card";
 
-export default function ArticlePage() {
+export default function DashboardArticlePage() {
     return (
         <main className="flex flex-col items-center justify-start">
             <div className="flex flex-col items-center justify-center w-[85%] text-center lg:w-[45%]">

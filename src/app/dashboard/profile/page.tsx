@@ -1,4 +1,4 @@
-export default function ProfilePage() {
+export default function DashboardProfilePage() {
     return (
         <div className="flex flex-col items-center justify-center w-full h-full">
             <p className="text-xl font-semibold">User Profile</p>
