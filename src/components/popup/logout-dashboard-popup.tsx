@@ -4,7 +4,7 @@ export default function DashboardLogoutPopup() {
         <div className="fixed flex items-center justify-center w-full h-screen z-20">
             <div className="fixed top-0 w-full h-full bg-black opacity-50"/>
 
-            <div className="absolute flex flex-col items-start justify-center w-[450px] h-[200px] px-6 bg-white rounded-lg">
+            <div className="absolute flex flex-col items-start justify-center w-[90%] h-[200px] px-6 bg-white rounded-lg lg:[450px]">
 
                 <p className="text-2xl font-semibold">Logout</p>
                 <p className="text-[#64748B] my-6">Are you sure want to logout?</p>
