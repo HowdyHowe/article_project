@@ -1,11 +1,15 @@
+"use client"
+
 import AdminArticleCard from "@/components/admin-article-card";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 import z from "zod";
 
 const articleschema = z.object({
+    category: z.string(),
     article: z.string(),
 })
 
@@ -14,15 +18,33 @@ type ArticleForm = z.infer<typeof articleschema>
 export default function AdminArticlePage() {
     const {
         register,
-        handleSubmit,
+        watch,
         formState: { errors }
     } = useForm<ArticleForm>({
         resolver: zodResolver(articleschema)
     });
+    const [ debouncedQuery, setDebouncedQuery ] = useState({
+        category: "",
+        article: ""
+    });
+    const categoryValue = watch("category")
+    const articleValue = watch("article")
 
-    const onSubmit = (data: ArticleForm) => {
-        console.log("Article: ", data.article);
-    }
+    // debouce timer
+    useEffect(() => {
+        const timer = setTimeout(() => {
+                setDebouncedQuery({
+                    category: categoryValue,
+                    article: articleValue
+                });
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [articleValue, categoryValue])
+
+    useEffect(() => {
+        console.log("article: ", articleValue)
+        console.log("category: ", categoryValue)
+    }, [debouncedQuery])
 
     return (
         <div className="flex flex-col items-center justify-center w-full h-full pt-[75px]">
@@ -31,13 +53,13 @@ export default function AdminArticlePage() {
                     Total Articles: 25
                 </div>
                 <div className="flex flex-row items-center justify-between w-full h-[100px] px-4 border-b">
-                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2">
+                    <form  className="flex flex-row gap-2">
                         <div className="flex items-center justify-center w-[125px] h-[40px] px-2 border rounded-lg">
-                            <select {...register("article")} className="w-full bg-transparent">
-                                <option value="">contoh</option>
-                                <option value="">contoh</option>
-                                <option value="">depan</option>
-                                <option value="">contoh</option>
+                            <select  {...register("category")} className="w-full bg-transparent">
+                                <option value="contoh1">contoh1</option>
+                                <option value="contoh2">contoh2</option>
+                                <option value="depan">depan</option>
+                                <option value="contoh3">contoh3</option>
                             </select>
                         </div>
                         {/* Error sign for article */}
@@ -45,7 +67,7 @@ export default function AdminArticlePage() {
 
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
-                            <input type="text" placeholder="Search Article" className="bg-transparent"/>
+                            <input {...register("article")} type="text" placeholder="Search Article" className="bg-transparent"/>
                         </div>
                     </form>
 
