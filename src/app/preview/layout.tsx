@@ -5,8 +5,8 @@ export default function LayoutArticle({ children }: {children: React.ReactNode})
                 <img src="/images/logo-black.png" alt="logo" className="w-[125px]"/>
 
                 <div className="flex flex-row items-center justify-center">
-                    <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
-                    <p className="hidden lg:flex ml-4 text-lg text-black underline">James bond</p>
+                    <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">P</div>
+                    <p className="hidden lg:flex ml-4 text-lg text-black underline">Preview Page</p>
                 </div>
 
             </header>

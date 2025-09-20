@@ -9,8 +9,8 @@ import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 import z from "zod";
 
 const articleschema = z.object({
-    category: z.string(),
     article: z.string(),
+    category: z.string(),
 })
 
 type ArticleForm = z.infer<typeof articleschema>
@@ -23,22 +23,24 @@ export default function AdminArticlePage() {
     } = useForm<ArticleForm>({
         resolver: zodResolver(articleschema)
     });
+
     const [ debouncedQuery, setDebouncedQuery ] = useState({
-        category: "",
-        article: ""
+        article: "",
+        category: ""
     });
-    const categoryValue = watch("category")
+
     const articleValue = watch("article")
+    const categoryValue = watch("category")
 
     // debouce timer
     useEffect(() => {
         const timer = setTimeout(() => {
                 setDebouncedQuery({
+                    article: articleValue,
                     category: categoryValue,
-                    article: articleValue
                 });
-        }, 500);
-        return () => clearTimeout(timer);
+            }, 500);
+            return () => clearTimeout(timer);
     }, [articleValue, categoryValue])
 
     useEffect(() => {

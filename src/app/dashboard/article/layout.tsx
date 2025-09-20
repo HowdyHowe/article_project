@@ -1,7 +1,13 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function LayoutDashboardArticle({ children }: {children: React.ReactNode}) {
+    const router = useRouter();
+
     return (
         <div className="flex flex-col justify-start w-full">
-            <header className="flex flex-row items-center justify-between w-full h-[75px] px-[4%] border-b lg:h-[125px]">
+            <header className="flex flex-row items-center justify-between w-full h-[75px] px-[4%] border-b lg:h-[125px]" onClick={() => router.push("/dashboard/profile")}>
                 <img src="/images/logo-black.png" alt="logo" className="w-[125px]"/>
 
                 <div className="flex flex-row items-center justify-center cursor-pointer">

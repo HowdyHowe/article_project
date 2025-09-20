@@ -1,4 +1,10 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function DashboardProfilePage() {
+    const router = useRouter();
+
     return (
         <div className="flex flex-col items-center justify-center w-full h-full">
             <p className="text-xl font-semibold">User Profile</p>
@@ -28,7 +34,7 @@ export default function DashboardProfilePage() {
                 {/* sizedbox for padding */}
                 <div className="h-[20px]"/>
 
-                <div className="flex items-center justify-center w-full h-[50px] text-white pl-4 bg-[#2563EB] border border-[#E2E8F0] cursor-pointer rounded-lg">
+                <div className="flex items-center justify-center w-full h-[50px] text-white pl-4 bg-[#2563EB] border border-[#E2E8F0] cursor-pointer rounded-lg" onClick={() => router.back()}>
                     Back to Home
                 </div>
             </div>

@@ -14,9 +14,10 @@ const stateDataSlice = createSlice({
     reducers: {
         setAdminPage: (state, action: PayloadAction<string>) => {
             state.adminPage = action.payload
-        }
+        },
+        reset: () => initialState,
     }
 });
 
-export const { setAdminPage } = stateDataSlice.actions;
+export const { setAdminPage, reset } = stateDataSlice.actions;
 export default stateDataSlice.reducer;

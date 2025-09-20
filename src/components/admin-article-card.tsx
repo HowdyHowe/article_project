@@ -1,4 +1,8 @@
+import { useRouter } from "next/navigation"
+
 export default function AdminArticleCard() {
+    const router = useRouter();
+
     return (
         <div className="grid grid-cols-5 w-full h-[75px] border-b-[2px]">
             <div className="flex items-center justify-center">
@@ -18,7 +22,7 @@ export default function AdminArticleCard() {
             </div>
 
             <div className="flex items-center justify-center w-full gap-4">
-                <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer">Preview</p>
+                <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer" onClick={() => router.push("/preview")}>Preview</p>
                 <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer">Edit</p>
                 <p className="text-center text-[#EF4444] line-clamp-2 underline cursor-pointer">Delete</p>
             </div>

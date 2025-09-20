@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import "@/style/style.scss"
+import Provider from "@/store/provider";
 
 const archivo = Archivo({
   subsets: ["latin"]
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={archivo.className}>
+        <Provider>
           {children}
+        </Provider>
       </body>
     </html>
   );

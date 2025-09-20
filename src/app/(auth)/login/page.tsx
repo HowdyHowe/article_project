@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "@/store";
 
 const loginSchema = z.object({
     username: z.string().min(5, "Username must be at least 5 letter"),
@@ -17,6 +19,8 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function LoginPage() {
     const [ visible, setVisible ] = useState(false);
     const router = useRouter();
+    // const dispatch = useDispatch();
+    const adminPage = useSelector((state: rootState) => state.stateData.adminPage)
 
     const {
         register,
@@ -30,6 +34,8 @@ export default function LoginPage() {
         console.log("Username: ", data.username);
         console.log("Password: ", data.password);
     }
+
+    console.log(adminPage);
 
     return (
         <div className="flex flex-col items-center justify-evenly w-[95%] h-[450px] bg-white rounded-xl lg:w-[500px] lg:h-[450px]">
