@@ -56,6 +56,7 @@ export default function AdminArticlePage() {
                     <form  className="flex flex-row gap-2">
                         <div className="flex items-center justify-center w-[125px] h-[40px] px-2 border rounded-lg">
                             <select  {...register("category")} className="w-full bg-transparent">
+                                <option value="">All</option>
                                 <option value="contoh1">contoh1</option>
                                 <option value="contoh2">contoh2</option>
                                 <option value="depan">depan</option>
