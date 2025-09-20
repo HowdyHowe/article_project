@@ -18,7 +18,7 @@ export default function LoginPage() {
     const [ visible, setVisible ] = useState(false);
     const router = useRouter();
 
-    const{
+    const {
         register,
         handleSubmit,
         formState: { errors },

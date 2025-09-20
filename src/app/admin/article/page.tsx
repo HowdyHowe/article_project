@@ -1,8 +1,29 @@
 import AdminArticleCard from "@/components/admin-article-card";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
+import z from "zod";
+
+const articleschema = z.object({
+    article: z.string(),
+})
+
+type ArticleForm = z.infer<typeof articleschema>
 
 export default function AdminArticlePage() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<ArticleForm>({
+        resolver: zodResolver(articleschema)
+    });
+
+    const onSubmit = (data: ArticleForm) => {
+        console.log("Article: ", data.article);
+    }
+
     return (
         <div className="flex flex-col items-center justify-center w-full h-full pt-[75px]">
             <div className="flex flex-col items-center justify-start w-[97%] min-h-[97%] my-4 bg-white border rounded-xl">
@@ -10,15 +31,17 @@ export default function AdminArticlePage() {
                     Total Articles: 25
                 </div>
                 <div className="flex flex-row items-center justify-between w-full h-[100px] px-4 border-b">
-                    <form className="flex flex-row gap-2">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2">
                         <div className="flex items-center justify-center w-[125px] h-[40px] px-2 border rounded-lg">
-                            <select className="w-full bg-transparent">
+                            <select {...register("article")} className="w-full bg-transparent">
                                 <option value="">contoh</option>
                                 <option value="">contoh</option>
                                 <option value="">depan</option>
                                 <option value="">contoh</option>
                             </select>
                         </div>
+                        {/* Error sign for article */}
+                        {errors.article && <p className="text-sm text-[#DC2626]">{errors.article.message}</p>}
 
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>

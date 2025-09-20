@@ -1,8 +1,30 @@
+import z from "zod";
 import AdminCategoryCard from "@/components/admin-category-card";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 
+const categorySchema = z.object({
+    category: z.string()
+});
+
+type CategoryForm = z.infer<typeof categorySchema>
+
 export default function AdminCategoryPage() {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        resolver: zodResolver(categorySchema)
+    });
+
+    const onSubmit = (data: CategoryForm) => {
+        console.log("category: ", data.category)
+    }
+
     return (
         <div className="flex flex-col items-center justify-center w-full h-full pt-[75px]">
             <div className="flex flex-col items-center justify-start w-[97%] min-h-[97%] my-4 bg-white border rounded-xl">
@@ -10,12 +32,14 @@ export default function AdminCategoryPage() {
                     Total Category: 25
                 </div>
                 <div className="flex flex-row items-center justify-between w-full h-[100px] px-4 border-b">
-                    <form className="flex flex-row gap-2">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2">
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
                             <input type="text" placeholder="Search Article" className="bg-transparent"/>
                         </div>
                     </form>
+                    {/* Error sign for category */}
+                    {errors.category && <p className="text-sm text-[#DC2626]">{errors.category.message}</p>}
 
                     <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer">
                         <LuPlus size={20} className="mr-2"/>
