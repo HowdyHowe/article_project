@@ -10,7 +10,7 @@ type TipTapEditorProps = {
     placeholder?: string
 };
 
-export default function TipTapEditor({content = "", onChange = () => {}}: TipTapEditorProps) {
+export default function TipTapEditor({content = "", onChange = () => {},}: TipTapEditorProps) {
     const editor = useEditor({
         extensions: [
             SmarterKit,
@@ -32,13 +32,6 @@ export default function TipTapEditor({content = "", onChange = () => {}}: TipTap
     })
 
     if (!editor) return null;
-
-    // const addImage = () => {
-    //     const url = prompt("Enter image URL: ")
-    //     if (url) {
-    //         editor.chain().focus().setImage({ src: url }).run()
-    //     }
-    // }
 
     return (
         <div className="w-full mx-auto">
@@ -103,7 +96,7 @@ export default function TipTapEditor({content = "", onChange = () => {}}: TipTap
                             }
                         }}
                         title="Undo"
-                        className="p-2 ````rounded-md hover:bg-gray-200"
+                        className="p-2 rounded-md hover:bg-gray-200"
                     >
                         <LuImage size={16}/>
                     </button>

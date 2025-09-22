@@ -159,10 +159,21 @@ export default function AdminAddArticlePage() {
                             )}
                         />
                     </div>
+                    {/* sizedbox for padding */}
+                    <div className="min-h-[25px]"/>
 
                     <div className="flex flex-row items-center justify-end gap-2 w-full h-full">
-                        <div className="flex items-center justify-center w-[125px] h-[50px] bg-white text border rounded-md">Cancel</div>
-                        <div className="flex items-center justify-center w-[125px] h-[50px] bg-[#E2E8F0] text border rounded-md">Preview</div>
+                        <div className="flex items-center justify-center w-[125px] h-[50px] bg-white text border rounded-md cursor-pointer" onClick={
+                            () => {
+                                dispatch(setAdminPage("article"))
+                                router.back()
+                            }
+                        }>Cancel</div>
+                        <div className="flex items-center justify-center w-[125px] h-[50px] bg-[#E2E8F0] text border rounded-md cursor-pointer" onClick={
+                            () => {
+                                router.push("/preview")
+                            }
+                        }>Preview</div>
                         <div className="flex items-center justify-center w-[125px] h-[50px] bg-[#2563EB] text-white text border rounded-md">Upload</div>
                     </div>
 

@@ -1,4 +1,9 @@
+import { setAdminDeleteCategory, setAdminEditCategory } from "@/store/state";
+import { useDispatch } from "react-redux"
+
 export default function AdminCategoryCard() {
+    const dispatch = useDispatch();
+
     return (
         <div className="grid grid-cols-3 w-full h-[75px] border-b-[2px]">
             <div className="flex items-center justify-center w-full px-4">
@@ -10,8 +15,12 @@ export default function AdminCategoryCard() {
             </div>
 
             <div className="flex items-center justify-center w-full gap-4">
-                <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer">Edit</p>
-                <p className="text-center text-[#EF4444] line-clamp-2 underline cursor-pointer">Delete</p>
+                <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer" onClick={() => {
+                    dispatch(setAdminEditCategory());
+                }}>Edit</p>
+                <p className="text-center text-[#EF4444] line-clamp-2 underline cursor-pointer" onClick={() => {
+                    dispatch(setAdminDeleteCategory());
+                }}>Delete</p>
             </div>
         </div>
     )

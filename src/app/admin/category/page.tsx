@@ -7,6 +7,9 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "@/store";
+import { setAdminAddCategory } from "@/store/state";
 
 const categorySchema = z.object({
     category: z.string()
@@ -22,8 +25,9 @@ export default function AdminCategoryPage() {
     } = useForm<CategoryForm>({
         resolver: zodResolver(categorySchema)
     })
-    const [ debouncedQuery, setDebouncedQuery] = useState("")
+    const [ debouncedQuery, setDebouncedQuery] = useState("");
     const categoryValue = watch("category");
+    const dispatch = useDispatch();
 
     // debounce timer
     useEffect(() => {
@@ -34,12 +38,13 @@ export default function AdminCategoryPage() {
     }, [categoryValue]);
 
     useEffect (() => {
-        // note: put the fetching data here later
+        // note: put the fetched data here later
         console.log("Category: ", categoryValue)
     },[debouncedQuery])
 
     return (
         <div className="flex flex-col items-center justify-center w-full h-full pt-[75px]">
+
             <div className="flex flex-col items-center justify-start w-[97%] min-h-[97%] my-4 bg-white border rounded-xl">
                 <div className="flex items-center justify-start w-full h-[75px] px-4 text-lg border-b">
                     Total Category: 25
@@ -52,7 +57,11 @@ export default function AdminCategoryPage() {
                         </div>
                     </form>
 
-                    <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer">
+                    <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer" onClick={
+                        () => {
+                            dispatch(setAdminAddCategory());
+                        }
+                    }>
                         <LuPlus size={20} className="mr-2"/>
                         <p>Add Category</p>
                     </div>

@@ -1,5 +1,8 @@
 "use client";
 
+import AdminAddCategoryPopup from "@/components/popup/admin-add-category-popup";
+import AdminDeleteCategoryPopup from "@/components/popup/admin-delete-category-popup";
+import AdminEditCategoryPopup from "@/components/popup/admin-edit-category-popup";
 import { rootState } from "@/store";
 import { reset, setAdminPage } from "@/store/state";
 import { useRouter } from "next/navigation";
@@ -8,6 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function LayoutAdmin({ children }: { children: React.ReactNode }) {
     const adminPage = useSelector((state: rootState) => state.stateData.adminPage)
+    const adminAddCategory = useSelector((state: rootState) => state.stateData.adminAddCategory);
+    const adminEditCategory = useSelector((state: rootState) => state.stateData.adminEditCategory);
+    const adminDeleteCategory = useSelector((state: rootState) => state.stateData.adminDeleteCategory);
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -20,13 +26,16 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
 
     return (
         <div className="flex items-start justify-center w-full h-screen">
+
+            <AdminAddCategoryPopup show={adminAddCategory}/>
+            <AdminEditCategoryPopup show={adminEditCategory} />
+            <AdminDeleteCategoryPopup show={adminDeleteCategory} />
             <div className="flex flex-row items-start justify-center w-full h-full">
                 <aside className="flex flex-col items-center justify-start w-[325px] h-full pt-8 bg-[#2563EB]">
                     <div className="flex flex-col items-start justify-center w-[90%] text-lg">
                         <div className="flex items-center justify-start w-full h-[40px] px-4">
                             <img src="/images/logo-white.png" alt="logo" className="w-[150px]"/>
                         </div>
-
                         <div className={`flex items-center justify-start w-full h-[50px] mt-8 px-4 text-white rounded-md cursor-pointer ${adminPage == "article" && "bg-[#3B82F6]"}`} onClick={() => {
                             if (adminPage != "article") {
                                 dispatch(setAdminPage("article"))

@@ -1,4 +1,21 @@
-export default function AdminEditCategoryPopup() {
+import { setAdminEditCategory } from "@/store/state";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+type AdminEditCategoryPopupProps = {
+    show: boolean;
+}
+
+export default function AdminEditCategoryPopup({ show }: AdminEditCategoryPopupProps) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!show) document.body.style.overflow = "hidden"
+        if (show) document.body.style.overflow = ""
+    }, [show])
+
+    if (!show) return null
+
     return (
         <div className="fixed flex items-center justify-center w-full h-screen z-20">
             <div className="fixed top-0 w-full h-full bg-black opacity-50"/>
@@ -13,7 +30,9 @@ export default function AdminEditCategoryPopup() {
                     </div>
                 </form>
                 <div className="flex flex-row w-full items-center justify-end gap-2">
-                    <div className="flex items-center justify-center w-[75px] h-[40px] border rounded-md cursor-pointer">Cancel</div>
+                    <div className="flex items-center justify-center w-[75px] h-[40px] border rounded-md cursor-pointer" onClick={() => {
+                        dispatch(setAdminEditCategory());
+                    }}>Cancel</div>
                     <div className="flex items-center justify-center w-[125px] h-[40px] bg-[#2563EB] text-white border rounded-md cursor-pointer">Save Changes</div>
                 </div>
             </div>
