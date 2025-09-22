@@ -12,7 +12,7 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (adminPage == "article") {
+        if (adminPage === "article") {
             dispatch(setAdminPage("article"));
             router.push("/admin/article")
         }

@@ -1,12 +1,15 @@
 "use client"
 
+import z from "zod";
 import AdminArticleCard from "@/components/admin-article-card";
+import { reset, setAdminPage } from "@/store/state";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
-import z from "zod";
+import { useDispatch } from "react-redux";
 
 const articleschema = z.object({
     article: z.string(),
@@ -29,8 +32,10 @@ export default function AdminArticlePage() {
         category: ""
     });
 
-    const articleValue = watch("article")
-    const categoryValue = watch("category")
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const articleValue = watch("article");
+    const categoryValue = watch("category");
 
     // debouce timer
     useEffect(() => {
@@ -44,6 +49,7 @@ export default function AdminArticlePage() {
     }, [articleValue, categoryValue])
 
     useEffect(() => {
+        // note: put the fetching data here later
         console.log("article: ", articleValue)
         console.log("category: ", categoryValue)
     }, [debouncedQuery])
@@ -74,7 +80,10 @@ export default function AdminArticlePage() {
                         </div>
                     </form>
 
-                    <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer">
+                    <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer" onClick={() => {
+                        dispatch(setAdminPage("add"));
+                        router.push("/admin/article/add")
+                    }}>
                         <LuPlus size={20} className="mr-2"/>
                         <p>Add Article</p>
                     </div>

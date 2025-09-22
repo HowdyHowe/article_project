@@ -18,10 +18,9 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
     const [ visible, setVisible ] = useState(false);
-    const router = useRouter();
-    // const dispatch = useDispatch();
     const adminPage = useSelector((state: rootState) => state.stateData.adminPage)
-
+    const dispatch = useDispatch();
+    const router = useRouter();
     const {
         register,
         handleSubmit,

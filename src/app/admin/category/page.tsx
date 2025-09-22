@@ -34,6 +34,7 @@ export default function AdminCategoryPage() {
     }, [categoryValue]);
 
     useEffect (() => {
+        // note: put the fetching data here later
         console.log("Category: ", categoryValue)
     },[debouncedQuery])
 
