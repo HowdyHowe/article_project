@@ -81,7 +81,6 @@ export default function AdminArticlePage() {
                     </form>
 
                     <div className="flex items-center justify-center w-[150px] h-[50px] bg-[#2563EB] text-white border rounded-lg cursor-pointer" onClick={() => {
-                        dispatch(setAdminPage("add"));
                         router.push("/admin/article/add")
                     }}>
                         <LuPlus size={20} className="mr-2"/>

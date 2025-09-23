@@ -5,11 +5,11 @@ import AdminDeleteArticlesPopup from "@/components/popup/admin-delete-articles-p
 import AdminDeleteCategoryPopup from "@/components/popup/admin-delete-category-popup";
 import AdminEditCategoryPopup from "@/components/popup/admin-edit-category-popup";
 import AdminLogoutPopup from "@/components/popup/admin-logout-popup";
-import { rootState } from "@/store";
 import { reset, setAdminLogout, setAdminPage } from "@/store/state";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { rootState } from "@/store";
+import { useEffect } from "react";
 
 export default function LayoutAdmin({ children }: { children: React.ReactNode }) {
     const adminPage = useSelector((state: rootState) => state.stateData.adminPage);
@@ -23,10 +23,23 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         if (adminPage === "article") {
+            dispatch(reset());
             dispatch(setAdminPage("article"));
-            router.push("/admin/article")
+            router.push("/admin/article");
         }
     }, [])
+
+    useEffect(() => {
+        const handleBack = () => {
+            dispatch(reset());
+        };
+
+        window.addEventListener("popstate", handleBack);
+
+        return () => {
+            window.removeEventListener("popstate", handleBack);
+        };
+    }, []);
 
     return (
         <div className="flex items-start justify-center w-full h-screen">
@@ -71,9 +84,22 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
                 </aside>
                 <div className="relative flex flex-col w-full h-full bg-[#F3F4F6]">
                     <header className="absolute top-0 flex flex-row items-center justify-between w-full min-h-[75px] px-[2%] border-b">
-                        <p className="text-2xl font-semibold">Articles</p>
+                        <p className="text-2xl font-semibold">
+                            {
+                                adminPage == "article" ?
+                                "Article":
+                                adminPage == "category" ?
+                                "Category":
+                                adminPage == "profile" ?
+                                "User Profile":
+                                ""
+                            }
+                        </p>
 
-                        <div className="flex flex-row items-center justify-center cursor-pointer" onClick={() => router.push("/admin/profile")}>
+                        <div className="flex flex-row items-center justify-center cursor-pointer" onClick={() => {
+                            dispatch(setAdminPage("profile"))
+                            router.push("/admin/profile")
+                        }}>
                             <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
                             <p className="flex ml-4 text-lg text-black underline">James bond</p>
                         </div>

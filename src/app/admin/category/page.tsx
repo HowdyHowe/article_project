@@ -53,7 +53,7 @@ export default function AdminCategoryPage() {
                     <form className="flex flex-row gap-2">
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
-                            <input {...register("category")} type="text" placeholder="Search Article" className="bg-transparent"/>
+                            <input {...register("category")} type="text" placeholder="Search Article" className="bg-transparent w-full"/>
                         </div>
                     </form>
 
