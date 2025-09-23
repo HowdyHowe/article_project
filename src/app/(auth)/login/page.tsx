@@ -18,8 +18,6 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
     const [ visible, setVisible ] = useState(false);
-    const adminPage = useSelector((state: rootState) => state.stateData.adminPage)
-    const dispatch = useDispatch();
     const router = useRouter();
     const {
         register,
@@ -33,8 +31,6 @@ export default function LoginPage() {
         console.log("Username: ", data.username);
         console.log("Password: ", data.password);
     }
-
-    console.log(adminPage);
 
     return (
         <div className="flex flex-col items-center justify-evenly w-[95%] h-[450px] bg-white rounded-xl lg:w-[500px] lg:h-[450px]">
