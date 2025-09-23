@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface stateData{
     adminPage: string;
+    adminLogout: boolean;
+    adminDeleteArticle: boolean;
     adminAddCategory: boolean;
     adminEditCategory: boolean;
     adminDeleteCategory: boolean;
@@ -9,6 +11,8 @@ interface stateData{
 
 const initialState: stateData = {
     adminPage: "article",
+    adminLogout: false,
+    adminDeleteArticle: false,
     adminAddCategory: false,
     adminEditCategory: false,
     adminDeleteCategory: false,
@@ -20,6 +24,12 @@ const stateDataSlice = createSlice({
     reducers: {
         setAdminPage: (state, action: PayloadAction<string>) => {
             state.adminPage = action.payload;
+        },
+        setAdminLogout: (state) => {
+            state.adminLogout = !state.adminLogout;
+        },
+        setAdminDeleteArticle: (state) => {
+            state.adminDeleteArticle = !state.adminDeleteArticle;
         },
         setAdminAddCategory: (state) => {
             state.adminAddCategory = !state.adminAddCategory;
@@ -34,5 +44,5 @@ const stateDataSlice = createSlice({
     }
 });
 
-export const { setAdminPage, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, reset } = stateDataSlice.actions;
+export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, reset } = stateDataSlice.actions;
 export default stateDataSlice.reducer;
