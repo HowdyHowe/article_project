@@ -4,6 +4,7 @@ import TipTapEditor from "@/components/custom-rte";
 import { setAdminPage } from "@/store/state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { title } from "process";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuArrowLeft, LuPlus, LuX } from "react-icons/lu";
@@ -23,7 +24,7 @@ const editArticleSchema = z.object({
 
 type EditArticleForm = z.infer<typeof editArticleSchema>
 
-export default function AdminEditArticlePage() {
+export default function AdminEditArticlePage({ article }: {article?: EditArticleForm}) {
     const [isDragging, setIsDragging] = useState(false)
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export default function AdminEditArticlePage() {
         control,
         formState: { errors }
     } = useForm<EditArticleForm>({
-        resolver: zodResolver(editArticleSchema)
+        resolver: zodResolver(editArticleSchema),
     });
 
     const onSubmit = (data: EditArticleForm) => {
