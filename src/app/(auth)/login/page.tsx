@@ -11,7 +11,7 @@ import { rootState } from "@/store";
 import axios from "axios";
 import LoadingAnimation from "@/components/loading-animation";
 import AlertAnimation from "@/components/alert-animation";
-import { setAlertAnimation, setLoadingAnimation } from "@/store/state";
+import { hideLoadingAnimation, showLoadingAnimation } from "@/store/state";
 
 const loginSchema = z.object({
     username: z.string().min(5, "Username must be at least 5 letter"),
@@ -20,9 +20,19 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
+type AlertType = {
+    message: string;
+    show: boolean;
+    type: string
+}
+
 export default function LoginPage() {
     const [ visible, setVisible ] = useState(false);
-    const alertAnimation = useSelector((state: rootState) => state.stateData.alertAnimation);
+    const [ alert, setAlert ] = useState<AlertType>({
+        message: "",
+        show: false,
+        type: "error"
+    });
     const loadingAnimation = useSelector((state: rootState) => state.stateData.loadingAnimation);
     const dispatch = useDispatch();
     const router = useRouter();
@@ -34,36 +44,48 @@ export default function LoginPage() {
         resolver: zodResolver(loginSchema),
     });
 
-    const showAlert = () => {
-        dispatch(setAlertAnimation());
+    const showAlert = (mes: string, type: string) => {
+        setAlert({
+            message: mes,
+            show: true,
+            type: type
+        });
         setTimeout(() => {
-            dispatch(setAlertAnimation());
-        }, 1000);
+            setAlert((prev) => ({...prev, show: false}))
+        }, 3000);
     }
 
     const onSubmit = async (data: LoginForm) => {
         try {
+            dispatch(showLoadingAnimation());
+
             const res = await axios.post("http://localhost:3000/auth/login", data, { headers: {"Content-Type": "application/json"}, validateStatus: () => true });
             const result = await res.data;
 
+            dispatch(hideLoadingAnimation());
+
             if (result.statusCode === 400) {
-                showAlert();
+                showAlert("Invalid Username of Password", "error");
             }
 
             if (result.statusCode === 500) {
-                dispatch(setAlertAnimation());
+                showAlert("Server Error", "error");
             }
 
-            if (result.statusCode === 200) {
+            if (result.statusCode === 200 && result.data.role) {
                 if (result.data.role === "ADMIN") router.push("/admin")
                 if (result.data.role === "USER") router.push("/dashboard")
             }
         } catch (err: unknown) {
-            setTimeout(() => {
-                dispatch(setLoadingAnimation());
-            }, 1000)
+            dispatch(hideLoadingAnimation());
 
-            console.log("=============error===============")
+            if (axios.isAxiosError(err)) {
+                const message = err.response?.data?.message || err.message || "Network Error";
+                showAlert(message, "error");
+            } else {
+                showAlert("Unexpected error occurred", "error");
+            }
+
         }
     };
 
@@ -71,7 +93,7 @@ export default function LoginPage() {
         <div className="flex flex-col items-center justify-evenly w-[95%] h-[450px] bg-white rounded-xl lg:w-[500px] lg:h-[450px]">
            <img src="/images/logo-black.png" className="w-[175px]" alt="Logo"/>
 
-           <AlertAnimation message="contoh" show={alertAnimation}/>
+           <AlertAnimation message={alert.message} show={alert.show} type={alert.type}/>
            <LoadingAnimation message="Logging in to the account" show={loadingAnimation}/>
 
            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[90%]">
@@ -107,7 +129,7 @@ export default function LoginPage() {
 
            <div className="flex flex-row">
                 <p className="mr-1 text-sm lg:text-base">Don`t have an account?</p>
-                <a onClick={() => router.push("/signup")} rel="noopener noreferrer" className="text-blue-600 text-sm lg:text-base underline cursor-pointer">Register</a>
+                <button onClick={() => router.push("/signup")} rel="noopener noreferrer" className="text-blue-600 text-sm lg:text-base underline cursor-pointer">Register</button>
             </div>
         </div>
     );

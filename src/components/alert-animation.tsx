@@ -3,10 +3,11 @@ import { AnimatePresence, motion } from "framer-motion";
 
 type AlertAnimationType = {
     message: string,
-    show: boolean
+    show: boolean,
+    type: string
 };
 
-export default function AlertAnimation({ message, show }: AlertAnimationType) {
+export default function AlertAnimation({ message, show, type }: AlertAnimationType) {
     useEffect(() => {
         if (!show) document.body.style.overflow = "hidden"
         if (show) document.body.style.overflow = ""
@@ -15,7 +16,7 @@ export default function AlertAnimation({ message, show }: AlertAnimationType) {
     if (!show) return null
 
     return(
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
             <motion.div
                 key="box"
                 initial={ { opacity: 0, y: -40 } }
@@ -24,7 +25,15 @@ export default function AlertAnimation({ message, show }: AlertAnimationType) {
                 transition={ { duration: 0.3 } }
                 className="absolute top-[10px]"
             >
-                <div className="flex items-center justify-center w-[200px] h-[50px] bg-[#2563EB] text-white rounded-xl">
+                <div className={`flex items-center justify-center text-center w-[200px] h-[50px] text-white rounded-lg ${
+                    type === "success"
+                        ? "bg-[#2563EB]"
+                        : type === "error"
+                        ? "bg-[#dc2626]"
+                        : type === "info"
+                        ? "bg-[#eab308]"
+                        : "bg-white"
+                }`}>
                     { message }
                 </div>
             </motion.div>

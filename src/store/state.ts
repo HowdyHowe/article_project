@@ -45,15 +45,21 @@ const stateDataSlice = createSlice({
         setAdminDeleteCategory: (state) => {
             state.adminDeleteCategory = !state.adminDeleteCategory;
         },
-        setAlertAnimation: (state) => {
-            state.alertAnimation = !state.alertAnimation;
+        showAlertAnimation: (state) => {
+            state.alertAnimation = true;
         },
-        setLoadingAnimation: (state) => {
-            state.loadingAnimation = !state.loadingAnimation;
+        hideAlertAnimation: (state) => {
+            state.alertAnimation = false;
+        },
+        showLoadingAnimation: (state) => {
+            state.loadingAnimation = true;
+        },
+        hideLoadingAnimation: (state) => {
+            state.loadingAnimation = false;
         },
         reset: () => initialState,
     }
 });
 
-export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, reset, setAlertAnimation, setLoadingAnimation } = stateDataSlice.actions;
+export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, showAlertAnimation, hideAlertAnimation, showLoadingAnimation, hideLoadingAnimation, reset } = stateDataSlice.actions;
 export default stateDataSlice.reducer;
