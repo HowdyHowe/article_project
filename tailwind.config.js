@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import scrollBar from "tailwind-scrollbar"
+import scrollBar from "tailwind-scrollbar";
 
 module.exports = {
   content: [

@@ -7,6 +7,8 @@ interface stateData{
     adminAddCategory: boolean;
     adminEditCategory: boolean;
     adminDeleteCategory: boolean;
+    alertAnimation: boolean,
+    loadingAnimation: boolean
 };
 
 const initialState: stateData = {
@@ -16,6 +18,9 @@ const initialState: stateData = {
     adminAddCategory: false,
     adminEditCategory: false,
     adminDeleteCategory: false,
+    alertAnimation: false,
+    loadingAnimation: false
+
 };
 
 const stateDataSlice = createSlice({
@@ -40,9 +45,15 @@ const stateDataSlice = createSlice({
         setAdminDeleteCategory: (state) => {
             state.adminDeleteCategory = !state.adminDeleteCategory;
         },
+        setAlertAnimation: (state) => {
+            state.alertAnimation = !state.alertAnimation;
+        },
+        setLoadingAnimation: (state) => {
+            state.loadingAnimation = !state.loadingAnimation;
+        },
         reset: () => initialState,
     }
 });
 
-export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, reset } = stateDataSlice.actions;
+export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, reset, setAlertAnimation, setLoadingAnimation } = stateDataSlice.actions;
 export default stateDataSlice.reducer;

@@ -8,6 +8,10 @@ import { useForm } from "react-hook-form";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "@/store";
+import axios from "axios";
+import LoadingAnimation from "@/components/loading-animation";
+import AlertAnimation from "@/components/alert-animation";
+import { setAlertAnimation, setLoadingAnimation } from "@/store/state";
 
 const loginSchema = z.object({
     username: z.string().min(5, "Username must be at least 5 letter"),
@@ -18,6 +22,9 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
     const [ visible, setVisible ] = useState(false);
+    const alertAnimation = useSelector((state: rootState) => state.stateData.alertAnimation);
+    const loadingAnimation = useSelector((state: rootState) => state.stateData.loadingAnimation);
+    const dispatch = useDispatch();
     const router = useRouter();
     const {
         register,
@@ -27,14 +34,45 @@ export default function LoginPage() {
         resolver: zodResolver(loginSchema),
     });
 
-    const onSubmit = (data: LoginForm) => {
-        console.log("Username: ", data.username);
-        console.log("Password: ", data.password);
+    const showAlert = () => {
+        dispatch(setAlertAnimation());
+        setTimeout(() => {
+            dispatch(setAlertAnimation());
+        }, 1000);
     }
+
+    const onSubmit = async (data: LoginForm) => {
+        try {
+            const res = await axios.post("http://localhost:3000/auth/login", data, { headers: {"Content-Type": "application/json"}, validateStatus: () => true });
+            const result = await res.data;
+
+            if (result.statusCode === 400) {
+                showAlert();
+            }
+
+            if (result.statusCode === 500) {
+                dispatch(setAlertAnimation());
+            }
+
+            if (result.statusCode === 200) {
+                if (result.data.role === "ADMIN") router.push("/admin")
+                if (result.data.role === "USER") router.push("/dashboard")
+            }
+        } catch (err: unknown) {
+            setTimeout(() => {
+                dispatch(setLoadingAnimation());
+            }, 1000)
+
+            console.log("=============error===============")
+        }
+    };
 
     return (
         <div className="flex flex-col items-center justify-evenly w-[95%] h-[450px] bg-white rounded-xl lg:w-[500px] lg:h-[450px]">
            <img src="/images/logo-black.png" className="w-[175px]" alt="Logo"/>
+
+           <AlertAnimation message="contoh" show={alertAnimation}/>
+           <LoadingAnimation message="Logging in to the account" show={loadingAnimation}/>
 
            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[90%]">
                 <label className="text-lg font-semibold">Username</label>
@@ -52,9 +90,9 @@ export default function LoginPage() {
                         () => setVisible(!visible)
                     }>
                         {
-                            visible ?
-                            <LuEye size={22} className="text-[#b7bcc3]"/>:
-                            <LuEyeOff size={22} className="text-[#b7bcc3]"/>
+                            visible
+                                ? ( <LuEye size={22} className="text-[#b7bcc3]"/> )
+                                : ( <LuEyeOff size={22} className="text-[#b7bcc3]"/> )
                         }
                     </div>
                 </div>
