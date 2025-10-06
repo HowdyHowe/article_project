@@ -1,4 +1,4 @@
-export default function LayoutArticle({ children }: {children: React.ReactNode}) {
+export default function LayoutPreview({ children }: {children: React.ReactNode}) {
     return (
         <div className="flex flex-col justify-start w-full">
             <header className="flex flex-row items-center justify-between w-full h-[75px] px-[4%] border-b lg:h-[125px]">
