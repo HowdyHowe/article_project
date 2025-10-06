@@ -1,9 +1,9 @@
-import { reset, setAdminLogout } from "@/store/state";
 import axios from "axios";
+import AlertAnimation from "../alert-animation";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import AlertAnimation from "../alert-animation";
+import { reset, setAdminLogout } from "@/store/state";
 
 type AdminLogoutPopupProps = {
     show: boolean;

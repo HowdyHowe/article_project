@@ -3,15 +3,13 @@
 import z from "zod";
 import axios from "axios";
 import AlertAnimation from "@/components/alert-animation";
-import LoginLoadingAnimation from "@/components/loading/login-loading-animation";
 import { useState } from "react";
 import { rootState } from "@/store";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { hideLoadingAnimation, showLoadingAnimation } from "@/store/state";
 
 const loginSchema = z.object({
     username: z.string().min(5, "Username must be at least 5 letter"),
@@ -33,7 +31,6 @@ export default function LoginPage() {
         show: false,
         type: "error"
     });
-    const loadingAnimation = useSelector((state: rootState) => state.stateData.loadingAnimation);
     const dispatch = useDispatch();
     const router = useRouter();
     const {
@@ -57,19 +54,15 @@ export default function LoginPage() {
 
     const onSubmit = async (data: LoginForm) => {
         try {
-            dispatch(showLoadingAnimation());
-
             const res = await axios.post("http://localhost:3000/auth/login", data, { headers: {"Content-Type": "application/json"}, validateStatus: () => true });
             const result = await res.data;
 
-            dispatch(hideLoadingAnimation());
-
             if (result.statusCode === 400) {
-                showAlert("Invalid Username of Password", "error");
+                return showAlert("Invalid Username of Password", "error");
             }
 
             if (result.statusCode === 500) {
-                showAlert("Server Error", "error");
+                return showAlert("Server Error", "error");
             }
             if (result.statusCode === 200 && result.data.role) {
                 const data = result.data;
@@ -80,24 +73,20 @@ export default function LoginPage() {
                 if (data.role === "USER") router.push("/dashboard")
             }
         } catch (err: unknown) {
-            dispatch(hideLoadingAnimation());
-
             if (axios.isAxiosError(err)) {
                 const message = err.response?.data?.message || err.message || "Network Error";
-                showAlert(message, "error");
+                return showAlert(message, "error");
             } else {
-                showAlert("Unexpected error occurred", "error");
+                return showAlert("Unexpected error occurred", "error");
             }
-
         }
     };
 
     return (
         <div className="flex flex-col items-center justify-evenly w-[95%] h-[450px] bg-white rounded-xl lg:w-[500px] lg:h-[450px]">
-           <img src="/images/logo-black.png" className="w-[175px]" alt="Logo"/>
-
            <AlertAnimation message={alert.message} show={alert.show} type={alert.type}/>
-           <LoginLoadingAnimation message="Logging in to the account" show={loadingAnimation}/>
+
+           <img src="/images/logo-black.png" className="w-[175px]" alt="Logo"/>
 
            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[90%]">
                 <label className="text-lg font-semibold">Username</label>

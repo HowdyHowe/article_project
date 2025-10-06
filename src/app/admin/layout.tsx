@@ -23,8 +23,8 @@ export default function LayoutAdmin({ children }: {children: React.ReactNode}) {
 
     return (
         <div className="relative w-full min-h-screen">
+            <LoadingAnimation show={loadingAnimation} opacity={"opacity-50"}/>
 
-            <LoadingAnimation message="Loading" show={loadingAnimation}/>
             {children}
         </div>
     )

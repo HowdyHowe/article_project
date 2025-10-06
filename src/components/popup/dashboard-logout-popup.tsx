@@ -2,8 +2,8 @@ import axios from "axios";
 import AlertAnimation from "../alert-animation";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react"
-import { reset, setDashboardLogout } from "@/store/state";
 import { useRouter } from "next/navigation";
+import { reset, setDashboardLogout } from "@/store/state";
 
 type DashboardLogoutPopupProps = {
     show: boolean;

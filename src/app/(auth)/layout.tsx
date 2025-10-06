@@ -24,7 +24,7 @@ export default function LayoutAuth({ children }: {children: React.ReactNode}) {
     return (
         <div className="relative flex items-center justify-center w-full h-screen bg-[#F3F4F6]">
 
-            <LoadingAnimation message="Loading" show={loadingAnimation}/>
+            <LoadingAnimation show={loadingAnimation} opacity={"opacity-100"}/>
 
             {children}
         </div>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: "Website for news and article."
 }
 
-export default function RootLayout({ children,}: Readonly<{children: React.ReactNode;}>) {
+export default function RootLayout({ children }: Readonly<{children: React.ReactNode;}>) {
 
   return (
     <html lang="en">

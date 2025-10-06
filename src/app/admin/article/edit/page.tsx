@@ -1,15 +1,14 @@
 "use client";
 
-import TipTapEditor from "@/components/custom-rte";
-import { setAdminPage } from "@/store/state";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { title } from "process";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { LuArrowLeft, LuPlus, LuX } from "react-icons/lu";
-import { useDispatch } from "react-redux";
 import z from "zod";
+import TipTapEditor from "@/components/custom-rte";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { setAdminPage } from "@/store/state";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LuArrowLeft, LuPlus, LuX } from "react-icons/lu";
 
 const editArticleSchema = z.object({
     images: z.instanceof(File, {message: "File is required"})

@@ -1,4 +1,3 @@
-import AdminArticleCard from "@/components/admin-article-card";
 import ArticleCard from "@/components/article-card";
 
 export default function DashboardArticlePage() {

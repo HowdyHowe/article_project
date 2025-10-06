@@ -30,8 +30,8 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
     return (
         <div className="relative flex items-start justify-center w-full h-screen">
 
-            <AdminDeleteArticlesPopup show={adminDeleteArticle} />
             <AdminLogoutPopup show={adminLogout}/>
+            <AdminDeleteArticlesPopup show={adminDeleteArticle} />
             <div className="flex flex-row items-start justify-center w-full h-full">
                 <aside className="flex flex-col items-center justify-start w-[325px] h-full pt-8 bg-[#2563EB]">
                     <div className="flex flex-col items-start justify-center w-[90%] text-lg">
