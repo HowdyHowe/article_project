@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoadingAnimation, showLoadingAnimation } from "@/store/state";
 
-export default function LayoutAuth({ children }: {children: React.ReactNode}) {
+export default function LayoutAdmin({ children }: {children: React.ReactNode}) {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const loadingAnimation = useSelector((state: rootState) => state.stateData.loadingAnimation);
@@ -16,17 +16,16 @@ export default function LayoutAuth({ children }: {children: React.ReactNode}) {
         dispatch(showLoadingAnimation());
         const timeout = setTimeout(() => {
             dispatch(hideLoadingAnimation());
-        }, 500);
+        }, 700);
 
         return () => clearTimeout(timeout);
     }, [pathname, dispatch]);
 
     return (
-        <div className="relative flex items-center justify-center w-full h-screen bg-[#F3F4F6]">
+        <div className="relative w-full min-h-screen">
 
-            <LoadingAnimation message="Logging in to the account" show={loadingAnimation}/>
-
+            <LoadingAnimation message="Loading" show={loadingAnimation}/>
             {children}
         </div>
-    );
+    )
 }

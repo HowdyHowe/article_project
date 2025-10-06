@@ -20,7 +20,6 @@ const initialState: stateData = {
     adminDeleteCategory: false,
     alertAnimation: false,
     loadingAnimation: false
-
 };
 
 const stateDataSlice = createSlice({

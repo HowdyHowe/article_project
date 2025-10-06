@@ -1,20 +1,17 @@
 "use client";
 
-import AdminAddCategoryPopup from "@/components/popup/admin-add-category-popup";
-import AdminDeleteArticlesPopup from "@/components/popup/admin-delete-articles-popup";
-import AdminDeleteCategoryPopup from "@/components/popup/admin-delete-category-popup";
-import AdminEditCategoryPopup from "@/components/popup/admin-edit-category-popup";
 import AdminLogoutPopup from "@/components/popup/admin-logout-popup";
-import { reset, setAdminLogout, setAdminPage } from "@/store/state";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import { rootState } from "@/store";
+import AdminDeleteArticlesPopup from "@/components/popup/admin-delete-articles-popup";
 import { useEffect } from "react";
+import { rootState } from "@/store";
+import { useRouter } from "next/navigation";
+import { reset, setAdminLogout } from "@/store/state";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function LayoutAdmin({ children }: { children: React.ReactNode }) {
-    const adminPage = useSelector((state: rootState) => state.stateData.adminPage);
     const adminLogout = useSelector((state: rootState) => state.stateData.adminLogout);
     const adminDeleteArticle = useSelector((state: rootState) => state.stateData.adminDeleteArticle);
+
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -31,7 +28,7 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
     }, []);
 
     return (
-        <div className="flex items-start justify-center w-full h-screen">
+        <div className="relative flex items-start justify-center w-full h-screen">
 
             <AdminDeleteArticlesPopup show={adminDeleteArticle} />
             <AdminLogoutPopup show={adminLogout}/>

@@ -1,15 +1,53 @@
 import { reset, setAdminLogout } from "@/store/state";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import AlertAnimation from "../alert-animation";
 
 type AdminLogoutPopupProps = {
     show: boolean;
 }
 
+type AlertType = {
+    message: string;
+    show: boolean;
+    type: string
+}
+
 export default function AdminLogoutPopup({ show }: AdminLogoutPopupProps) {
+    const [ alert, setAlert ] = useState<AlertType>({
+        message: "",
+        show: false,
+        type: "error"
+    });
     const router = useRouter();
     const dispatch = useDispatch();
+
+    const logoutSubmit = async () => {
+        try {
+            const logout = await axios.get("http://localhost:3000/auth/logout");
+            const result = logout.data
+
+            if (result.statusCode === 500) showAlert("Failed to logout", "error")
+
+            localStorage.removeItem("accessToken");
+            return router.push("/login")
+        } catch (err: unknown) {
+            console.log(err);
+        }
+    }
+
+    const showAlert = (mes: string, type: string) => {
+        setAlert({
+            message: mes,
+            show: true,
+            type: type
+        });
+        setTimeout(() => {
+            setAlert((prev) => ({...prev, show: false}))
+        }, 3000);
+    }
 
     useEffect(() => {
         if (!show) document.body.style.overflow = "hidden"
@@ -19,24 +57,28 @@ export default function AdminLogoutPopup({ show }: AdminLogoutPopupProps) {
     if (!show) return null
 
     return (
-        <div className="fixed flex items-center justify-center w-full h-screen z-20">
-            <div className="fixed top-0 w-full h-full bg-black opacity-50"/>
+        <>
+            <AlertAnimation message={alert.message} show={alert.show} type={alert.type}/>
+            <div className="fixed flex items-center justify-center w-full h-screen z-20">
+                <div className="fixed top-0 w-full h-full bg-black opacity-50"/>
 
-            <div className="absolute flex flex-col items-start justify-center w-[450px] h-[200px] px-6 bg-white rounded-lg">
+                <div className="absolute flex flex-col items-start justify-center w-[450px] h-[200px] px-6 bg-white rounded-lg">
 
-                <p className="text-2xl font-semibold">Logout</p>
-                <p className="text-[#64748B] my-6">Are you sure want to logout?</p>
-                <div className="flex flex-row w-full items-center justify-end gap-2">
-                    <div className="flex items-center justify-center w-[100px] h-[40px] border rounded-md cursor-pointer" onClick={() => {
-                        dispatch(setAdminLogout());
-                    }}>Cancel</div>
-                    <div className="flex items-center justify-center w-[100px] h-[40px] bg-[#2563EB] text-white border rounded-md cursor-pointer" onClick={() => {
-                        dispatch(reset());
-                        router.push("/login")
-                    }}>Logout</div>
+                    <p className="text-2xl font-semibold">Logout</p>
+                    <p className="text-[#64748B] my-6">Are you sure want to logout?</p>
+                    <div className="flex flex-row w-full items-center justify-end gap-2">
+                        <div className="flex items-center justify-center w-[100px] h-[40px] border rounded-md cursor-pointer" onClick={() => {
+                            dispatch(setAdminLogout());
+                        }}>Cancel</div>
+                        <div className="flex items-center justify-center w-[100px] h-[40px] bg-[#2563EB] text-white border rounded-md cursor-pointer" onClick={() => {
+                            dispatch(reset());
+                            logoutSubmit();
+                            router.push("/login")
+                        }}>Logout</div>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        </>
     )
 }

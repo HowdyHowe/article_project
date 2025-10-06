@@ -1,16 +1,16 @@
 "use client";
 
 import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import axios from "axios";
+import LoadingAnimation from "@/components/loading/loading-animation";
+import AlertAnimation from "@/components/alert-animation";
 import { useState } from "react";
+import { rootState } from "@/store";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
-import { rootState } from "@/store";
-import axios from "axios";
-import LoadingAnimation from "@/components/loading-animation";
-import AlertAnimation from "@/components/alert-animation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { hideLoadingAnimation, showLoadingAnimation } from "@/store/state";
 
 const loginSchema = z.object({
@@ -71,10 +71,13 @@ export default function LoginPage() {
             if (result.statusCode === 500) {
                 showAlert("Server Error", "error");
             }
-
             if (result.statusCode === 200 && result.data.role) {
-                if (result.data.role === "ADMIN") router.push("/admin")
-                if (result.data.role === "USER") router.push("/dashboard")
+                const data = result.data;
+
+                localStorage.setItem("accessToken", data.token);
+
+                if (data.role === "ADMIN") router.push("/admin")
+                if (data.role === "USER") router.push("/dashboard")
             }
         } catch (err: unknown) {
             dispatch(hideLoadingAnimation());

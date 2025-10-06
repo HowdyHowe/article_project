@@ -15,7 +15,7 @@ export default function LoadingAnimation({ message, show }: LoadingAnimationType
 
     return (
         <div className="fixed flex items-center justify-center w-full h-screen z-20">
-            <div className="fixed top-0 w-full h-full bg-black opacity-50"/>
+            <div className="fixed top-0 w-full h-full bg-black"/>
 
             <div className="absolute">
                 <div className="fixed inset-0 flex flex-col items-center justify-center z-50">
