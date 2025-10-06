@@ -2,8 +2,8 @@
 
 import z from "zod";
 import axios from "axios";
-import LoadingAnimation from "@/components/loading/loading-animation";
 import AlertAnimation from "@/components/alert-animation";
+import LoginLoadingAnimation from "@/components/loading/login-loading-animation";
 import { useState } from "react";
 import { rootState } from "@/store";
 import { useForm } from "react-hook-form";
@@ -97,7 +97,7 @@ export default function LoginPage() {
            <img src="/images/logo-black.png" className="w-[175px]" alt="Logo"/>
 
            <AlertAnimation message={alert.message} show={alert.show} type={alert.type}/>
-           <LoadingAnimation message="Logging in to the account" show={loadingAnimation}/>
+           <LoginLoadingAnimation message="Logging in to the account" show={loadingAnimation}/>
 
            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[90%]">
                 <label className="text-lg font-semibold">Username</label>
