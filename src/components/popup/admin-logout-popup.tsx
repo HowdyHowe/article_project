@@ -71,8 +71,8 @@ export default function AdminLogoutPopup({ show }: AdminLogoutPopupProps) {
                             dispatch(setAdminLogout());
                         }}>Cancel</div>
                         <div className="flex items-center justify-center w-[100px] h-[40px] bg-[#2563EB] text-white border rounded-md cursor-pointer" onClick={() => {
-                            dispatch(reset());
                             logoutSubmit();
+                            dispatch(reset());
                             router.push("/login")
                         }}>Logout</div>
                     </div>

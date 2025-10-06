@@ -1,12 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface stateData{
+    // popup widget
     adminPage: string;
     adminLogout: boolean;
     adminDeleteArticle: boolean;
     adminAddCategory: boolean;
     adminEditCategory: boolean;
     adminDeleteCategory: boolean;
+    dashboardLogout: boolean,
+    dashboardProfile: boolean,
+    // extra widget
     alertAnimation: boolean,
     loadingAnimation: boolean
 };
@@ -18,6 +22,8 @@ const initialState: stateData = {
     adminAddCategory: false,
     adminEditCategory: false,
     adminDeleteCategory: false,
+    dashboardLogout: false,
+    dashboardProfile: false,
     alertAnimation: false,
     loadingAnimation: false
 };
@@ -44,6 +50,12 @@ const stateDataSlice = createSlice({
         setAdminDeleteCategory: (state) => {
             state.adminDeleteCategory = !state.adminDeleteCategory;
         },
+        setDashboardLogout: (state) => {
+            state.dashboardLogout = !state.dashboardLogout;
+        },
+        setDashboardProfile: (state) => {
+            state.dashboardProfile = !state.dashboardProfile;
+        },
         showAlertAnimation: (state) => {
             state.alertAnimation = true;
         },
@@ -60,5 +72,5 @@ const stateDataSlice = createSlice({
     }
 });
 
-export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, showAlertAnimation, hideAlertAnimation, showLoadingAnimation, hideLoadingAnimation, reset } = stateDataSlice.actions;
+export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, setDashboardLogout, setDashboardProfile, showAlertAnimation, hideAlertAnimation, showLoadingAnimation, hideLoadingAnimation, reset } = stateDataSlice.actions;
 export default stateDataSlice.reducer;

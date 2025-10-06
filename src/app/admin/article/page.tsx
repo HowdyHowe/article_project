@@ -99,7 +99,7 @@ export default function AdminArticlePage() {
                 <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
                         Array.from({length: 10}, (_, index) =>
-                            <AdminArticleCard key={index}/>
+                            <AdminArticleCard key={index} title="Contoh"/>
                         )
                     }
                 </div>

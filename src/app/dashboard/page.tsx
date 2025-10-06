@@ -1,12 +1,18 @@
 "use client";
 
-import ArticleCard from "@/components/article-card";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import z from "zod";
+import WithAuth from "@/components/with-auth";
+import ArticleCard from "@/components/article-card";
+import DashboardProfilePopup from "@/components/popup/dashboard-profile-popup";
+import DashboardLogoutPopup from "@/components/popup/dashboard-logout-popup";
+import { rootState } from "@/store";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { setDashboardProfile } from "@/store/state";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch, useSelector } from "react-redux";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 const dashboardSchema = z.object({
     article: z.string(),
@@ -15,22 +21,23 @@ const dashboardSchema = z.object({
 
 type DashboardForm = z.infer<typeof dashboardSchema>
 
-export default function DashboardPage() {
+export default WithAuth(function DashboardPage() {
     const {
         register,
         watch,
-        formState: { errors },
     } = useForm<DashboardForm>({
         resolver: zodResolver(dashboardSchema)
-    })
-
+    });
     const [ debouncedQuery, setDebouncedQuery ] = useState({
         article: "",
         category: "",
-    })
+    });
     const router = useRouter();
-    const articleValue = watch("article")
-    const categoryValue = watch("category")
+    const dispatch = useDispatch();
+    const articleValue = watch("article");
+    const categoryValue = watch("category");
+    const dashboardProfile = useSelector((state: rootState) => state.stateData.dashboardProfile);
+    const dashboardLogout = useSelector((state: rootState) => state.stateData.dashboardLogout);
 
     // debounce timer
     useEffect(() => {
@@ -49,8 +56,10 @@ export default function DashboardPage() {
     }, [debouncedQuery])
 
     return (
-        <div className="flex flex-col items-center justify-start w-full">
+        <div className="relative flex flex-col items-center justify-start w-full h-full">
 
+            <DashboardProfilePopup show={dashboardProfile}/>
+            <DashboardLogoutPopup show={dashboardLogout}/>
             <header className="relative flex flex-col items-center justify-center w-full">
                 <img src="/images/headerdash.jpg" alt="header background" className="absolute top-[75px] w-full h-[600px] object-cover lg:top-0 lg:h-[600px]"/>
                 <div className="absolute top-[75px] w-full h-[600px] bg-[#2563EB] opacity-85 lg:top-0 lg:h-[600px]"/>
@@ -59,7 +68,9 @@ export default function DashboardPage() {
                     <img src="/images/logo-white.png" alt="logo" className="hidden lg:flex w-[150px]"/>
                     <img src="/images/logo-black.png" alt="logo" className="lg:hidden w-[125px]"/>
 
-                    <div className="flex flex-row items-center justify-center cursor-pointer" onClick={() => router.push("/dashboard/profile")}>
+                    <div className="flex flex-row items-center justify-center cursor-pointer" onClick={() => {
+                        dispatch(setDashboardProfile());
+                    }}>
                         <div className="flex items-center justify-center w-[35px] h-[35px] bg-[#BFDBFE] text-xl rounded-full">J</div>
                         <p className="hidden lg:flex ml-4 text-lg text-white underline">James bond</p>
                     </div>
@@ -138,4 +149,4 @@ export default function DashboardPage() {
             </footer>
         </div>
     );
-}
+})

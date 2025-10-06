@@ -8,7 +8,6 @@ export default async function middleware(req: NextRequest) {
         const nextRes = NextResponse.redirect(new URL("/login", req.url));
 
         nextRes.cookies.delete("accessToken");
-        nextRes.cookies.delete("role");
         return nextRes;
     }
 
@@ -21,7 +20,6 @@ export default async function middleware(req: NextRequest) {
             const nextRes = NextResponse.redirect(new URL("/login", req.url));
 
             nextRes.cookies.delete("accessToken");
-            nextRes.cookies.delete("role");
             return nextRes;
         }
     } catch (err) {
