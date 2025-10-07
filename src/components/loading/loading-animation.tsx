@@ -7,14 +7,14 @@ type LoadingAnimationType = {
 
 export default function LoadingAnimation({ show, opacity }: LoadingAnimationType) {
     useEffect(() => {
-        if (!show) document.body.style.overflow = "hidden"
-        if (show) document.body.style.overflow = ""
+        if (show) document.body.style.overflow = "hidden"
+        if (!show) document.body.style.overflow = ""
     }, [show])
 
     if (!show) return null
 
     return (
-        <div className="fixed flex items-center justify-center w-full h-screen z-20">
+        <div className="fixed flex items-center justify-center w-full z-20">
             <div className={`fixed top-0 w-full h-full bg-black ${opacity}`}/>
 
             <div className="absolute">

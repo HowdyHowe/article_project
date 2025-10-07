@@ -25,7 +25,7 @@ export default function AdminArticleCard({ title }: { title: string }) {
             </div>
 
             <div className="flex items-center justify-center w-full gap-4">
-                <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer" onClick={() => router.push("/preview")}>Preview</p>
+                <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer" onClick={() => router.push("/admin/preview")}>Preview</p>
                 <p className="text-center text-[#2563EB] line-clamp-2 underline cursor-pointer" onClick={() => {
                     router.push("/admin/article/edit")
                 }}>Edit</p>

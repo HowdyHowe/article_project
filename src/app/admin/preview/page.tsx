@@ -2,7 +2,7 @@ import ArticleCard from "@/components/article-card";
 
 export default function ArticlePage() {
     return (
-        <main className="flex flex-col items-center justify-start">
+        <main className="flex flex-col items-center justify-start h-full">
             <div className="flex flex-col items-center justify-center w-[85%] text-center lg:w-[45%]">
                 <div className="flex flex-row text-sm text-[#475569] lg:text-base">February 4, 2025 <p className="mx-1 lg:mx-4">•</p> Created By Admin</div>
                 <p className="mt-4 text-2xl font-semibold lg:text-4xl">Figma`s New Dev Mode: A Game-Changer For Designer & Developers</p>

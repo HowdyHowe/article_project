@@ -22,7 +22,7 @@ export default function LayoutAdmin({ children }: {children: React.ReactNode}) {
     }, [pathname, dispatch]);
 
     return (
-        <div className="relative w-full min-h-screen">
+        <div className="relative w-full h-full">
             <LoadingAnimation show={loadingAnimation} opacity={"opacity-50"}/>
 
             {children}
