@@ -21,7 +21,7 @@ const dashboardSchema = z.object({
 
 type DashboardForm = z.infer<typeof dashboardSchema>
 
-export default WithAuth(function DashboardPage() {
+export default function DashboardPage() {
     const {
         register,
         watch,
@@ -149,4 +149,4 @@ export default WithAuth(function DashboardPage() {
             </footer>
         </div>
     );
-})
+}

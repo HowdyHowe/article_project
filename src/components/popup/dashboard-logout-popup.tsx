@@ -1,9 +1,10 @@
-import axios from "axios";
+
 import AlertAnimation from "../alert-animation";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import { reset, setDashboardLogout } from "@/store/state";
+import axiosInstance from "../axios-instance";
 
 type DashboardLogoutPopupProps = {
     show: boolean;
@@ -26,13 +27,14 @@ export default function DashboardLogoutPopup({ show }: DashboardLogoutPopupProps
 
     const logoutSubmit = async () => {
         try {
-            const logout = await axios.get("http://localhost:3000/auth/logout");
-            const result = logout.data
+            // const logout = await axios.get("http://localhost:3000/auth/logout");
+            const logout = await axiosInstance.get("/auth/logout");
+            const result = logout.data;
 
             if (result.statusCode === 500) showAlert("Failed to logout", "error")
 
             localStorage.removeItem("accessToken");
-            return router.push("/login")
+            return router.push("/login");
         } catch (err: unknown) {
             console.log(err);
         }

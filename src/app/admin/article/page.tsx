@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
+import axiosInstance from "@/components/axios-instance";
 
 const articleschema = z.object({
     article: z.string(),
@@ -39,18 +40,21 @@ export default function AdminArticlePage() {
     // debouce timer
     useEffect(() => {
         const timer = setTimeout(() => {
-                setDebouncedQuery({
-                    article: articleValue,
-                    category: categoryValue,
-                });
-            }, 500);
-            return () => clearTimeout(timer);
+            setDebouncedQuery({
+                article: articleValue,
+                category: categoryValue,
+            });
+        }, 500);
+        return () => clearTimeout(timer);
     }, [articleValue, categoryValue])
 
     useEffect(() => {
-        // note: put the fetching data here later
-        console.log("article: ", articleValue)
-        console.log("category: ", categoryValue)
+        async function fetchData () {
+            const result = await axiosInstance.get("/article/searchArticle")
+            console.log(result)
+        }
+
+        fetchData();
     }, [debouncedQuery])
 
     return (

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useDispatch, } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axiosInstance from "@/components/axios-instance";
 
 const loginSchema = z.object({
     username: z.string().min(5, "Username must be at least 5 letter"),
@@ -54,7 +55,8 @@ export default function LoginPage() {
 
     const onSubmit = async (data: LoginForm) => {
         try {
-            const res = await axios.post("http://localhost:3000/auth/login", data, { headers: {"Content-Type": "application/json"}, validateStatus: () => true });
+            // const res = await axios.post("http://localhost:3000/auth/login", data, { headers: {"Content-Type": "application/json"}, validateStatus: () => true });
+            const res = await axiosInstance.post("/auth/login", data)
             const result = await res.data;
 
             if (result.statusCode === 400) {
