@@ -1,26 +1,18 @@
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:3000",
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
-});
-
-axiosInstance.interceptors.request.use((config) => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-    }
-    return config;
+    validateStatus: () => true
 });
 
 axiosInstance.interceptors.response.use(
     (response) => {
-        if (response.status === 202 && response.data?.data?.newAccessToken) {
-            const newToken = response.data?.data?.newAccessToken;
-            localStorage.setItem("accessToken", newToken);
 
-            axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+        if (response.status === 401) {
+            redirect("/login")
         }
 
         return response

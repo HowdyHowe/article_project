@@ -4,7 +4,6 @@ import z from "zod";
 import axios from "axios";
 import AlertAnimation from "@/components/alert-animation";
 import { useState } from "react";
-import { rootState } from "@/store";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { LuEye, LuEyeOff } from "react-icons/lu";
@@ -55,7 +54,6 @@ export default function LoginPage() {
 
     const onSubmit = async (data: LoginForm) => {
         try {
-            // const res = await axios.post("http://localhost:3000/auth/login", data, { headers: {"Content-Type": "application/json"}, validateStatus: () => true });
             const res = await axiosInstance.post("/auth/login", data)
             const result = await res.data;
 
@@ -68,8 +66,6 @@ export default function LoginPage() {
             }
             if (result.statusCode === 200 && result.data.role) {
                 const data = result.data;
-
-                localStorage.setItem("accessToken", data.token);
 
                 if (data.role === "ADMIN") router.push("/admin")
                 if (data.role === "USER") router.push("/dashboard")

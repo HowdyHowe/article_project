@@ -1,22 +1,39 @@
 "use client"
 
 import z from "zod";
+import axiosInstance from "@/components/axios-instance";
 import AdminArticleCard from "@/components/admin-article-card";
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
-import axiosInstance from "@/components/axios-instance";
 
-const articleschema = z.object({
-    article: z.string(),
-    category: z.string(),
+const searchArticleschema = z.object({
+    article     : z.string(),
+    category    : z.string(),
 })
 
-type ArticleForm = z.infer<typeof articleschema>
+type ArticleForm = z.infer<typeof searchArticleschema>
+
+type ArticleType = {
+    article_id  : string,
+    title       : string,
+    content     : string,
+    created_at  : string,
+    updated_at  : string
+    category    : {
+        category_id : string,
+        name        : string,
+        created_at  : string,
+        updated_at  : string,
+    },
+    author      : {
+        user_id     : string,
+        username    : string,
+    }
+}
 
 export default function AdminArticlePage() {
     const {
@@ -24,16 +41,23 @@ export default function AdminArticlePage() {
         watch,
         formState: { errors }
     } = useForm<ArticleForm>({
-        resolver: zodResolver(articleschema)
+        resolver: zodResolver(searchArticleschema)
     });
-
     const [ debouncedQuery, setDebouncedQuery ] = useState({
         article: "",
         category: ""
     });
-
+    const formattedDate = (date: string) => {
+        const curdate = new Date(date);
+        const formattedDate = curdate.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        })
+        return formattedDate.toString;
+    };
+    const [ result, setResult ] = useState<ArticleType[]>([]);
     const router = useRouter();
-    const dispatch = useDispatch();
     const articleValue = watch("article");
     const categoryValue = watch("category");
 
@@ -50,8 +74,13 @@ export default function AdminArticlePage() {
 
     useEffect(() => {
         async function fetchData () {
-            const result = await axiosInstance.get("/article/searchArticle")
-            console.log(result)
+            try {
+                const result = await axiosInstance.get("/article/searchArticle")
+                setResult(result.data.data.result)
+                // console.log(result.data.data.result)
+            } catch (err: unknown) {
+                
+            }
         }
 
         fetchData();
@@ -101,9 +130,9 @@ export default function AdminArticlePage() {
 
                 <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
-                        Array.from({length: 10}, (_, index) =>
-                            <AdminArticleCard key={index} title="Contoh"/>
-                        )
+                        result.map((article, index) => (
+                            <AdminArticleCard key={index} title={article.title} category={article.category.name} date={article.created_at} />
+                        ))
                     }
                 </div>
 

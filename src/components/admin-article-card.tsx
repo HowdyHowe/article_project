@@ -2,7 +2,13 @@ import { setAdminDeleteArticle } from "@/store/state";
 import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux";
 
-export default function AdminArticleCard({ title }: { title: string }) {
+type AdminCardType = {
+    title       : string,
+    category    : string,
+    date        : string
+}
+
+export default function AdminArticleCard({ title, category, date }: AdminCardType) {
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -17,11 +23,11 @@ export default function AdminArticleCard({ title }: { title: string }) {
             </div>
 
             <div className="flex items-center justify-center w-full px-4">
-                <p className="w-full max-h-[3rem] text-center line-clamp-2">Technology</p>
+                <p className="w-full max-h-[3rem] text-center line-clamp-2">{ category }</p>
             </div>
 
             <div className="flex items-center justify-center w-full px-4">
-                <p className="w-full max-h-[3rem] text-center line-clamp-2">April 14, 2025 10:55:12</p>
+                <p className="w-full max-h-[3rem] text-center line-clamp-2">{ date }</p>
             </div>
 
             <div className="flex items-center justify-center w-full gap-4">

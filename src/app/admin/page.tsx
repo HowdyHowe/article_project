@@ -1,13 +1,14 @@
+"use client";
 
-import { redirect } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default async function Admin() {
+export default function Admin() {
+  const router = useRouter();
 
-  redirect("/admin/article")
+  useEffect(() => {
+    router.replace("/admin/article");
+  }, [router]);
 
-  return (
-    <div>
-      loading...
-    </div>
-  );
+  return null;
 }
