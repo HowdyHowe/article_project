@@ -10,12 +10,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "@/store";
 import { setAdminAddCategory } from "@/store/state";
+import axiosInstance from "@/components/axios-instance";
 
 const categorySchema = z.object({
     category: z.string()
 });
 
 type CategoryForm = z.infer<typeof categorySchema>;
+
+type CategoryType = {
+    category_id: string,
+    name: string,
+    created_at: string,
+    updated_at: string
+}
 
 export default function AdminCategoryPage() {
     const {
@@ -25,6 +33,7 @@ export default function AdminCategoryPage() {
     } = useForm<CategoryForm>({
         resolver: zodResolver(categorySchema)
     })
+    const [ result, setResult ] = useState<CategoryType[]>([])
     const [ debouncedQuery, setDebouncedQuery] = useState("");
     const categoryValue = watch("category");
     const dispatch = useDispatch();
@@ -32,14 +41,21 @@ export default function AdminCategoryPage() {
     // debounce timer
     useEffect(() => {
         const timer = setTimeout(() => {
-            setDebouncedQuery(categoryValue || "");
+            setDebouncedQuery(categoryValue);
         }, 500);
         return () => clearTimeout(timer);
     }, [categoryValue]);
 
     useEffect (() => {
-        // note: put the fetched data here later
-        console.log("Category: ", categoryValue)
+        async function fetchData() {
+            const result = await axiosInstance.post("/category/searchCategory", data);
+            const articles = result.data?.data?.result || []
+
+            setResult(articles);
+            console.log(articles);
+        }
+
+        fetchData();
     },[debouncedQuery])
 
     return (
@@ -53,7 +69,7 @@ export default function AdminCategoryPage() {
                     <form className="flex flex-row gap-2">
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
-                            <input {...register("category")} type="text" placeholder="Search Article" className="bg-transparent w-full"/>
+                            <input {...register("category")} type="text" placeholder="Search Category" className="bg-transparent w-full"/>
                         </div>
                     </form>
 
@@ -67,17 +83,42 @@ export default function AdminCategoryPage() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-3 w-full h-[50px] bg-[#F3F4F6] border-b">
+                <div className="grid grid-cols-4 w-full h-[50px] bg-[#F3F4F6] border-b">
                     <p className="flex items-center justify-center font-semibold">Category</p>
                     <p className="flex items-center justify-center font-semibold">Created At</p>
+                    <p className="flex items-center justify-center font-semibold">Updated At</p>
                     <p className="flex items-center justify-center font-semibold">Action</p>
                 </div>
 
                 <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
-                        Array.from({length: 10}, (_, index) =>
-                            <AdminCategoryCard key={index}/>
-                        )
+                        result.length !== 0
+                        ?   result.map((category, index) => (
+                                <AdminCategoryCard key={index} name={category.name} created_at={
+                                    new Date(category.created_at).toLocaleDateString("en-GB", {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit"
+                                    })
+                                } updated_at={
+                                    new Date(category.updated_at).toLocaleDateString("en-GB", {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit"
+                                    })
+                                }/>
+                            ))
+                        :   (
+                                <div className="flex items-center justify-center w-full h-full">
+                                    <p className="font-semibold text-xl text-black">No Result</p>
+                                </div>
+                            )
                     }
                 </div>
 

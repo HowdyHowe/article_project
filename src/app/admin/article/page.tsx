@@ -47,15 +47,6 @@ export default function AdminArticlePage() {
         article: "",
         category: ""
     });
-    const formattedDate = (date: string) => {
-        const curdate = new Date(date);
-        const formattedDate = curdate.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        })
-        return formattedDate.toString;
-    };
     const [ result, setResult ] = useState<ArticleType[]>([]);
     const router = useRouter();
     const articleValue = watch("article");
@@ -74,13 +65,9 @@ export default function AdminArticlePage() {
 
     useEffect(() => {
         async function fetchData () {
-            try {
-                const result = await axiosInstance.get("/article/searchArticle")
-                setResult(result.data.data.result)
-                // console.log(result.data.data.result)
-            } catch (err: unknown) {
-                
-            }
+            const result = await axiosInstance.get("/article/searchArticle")
+            const articles = result.data?.data?.result || []
+            setResult(articles);
         }
 
         fetchData();
@@ -104,7 +91,7 @@ export default function AdminArticlePage() {
                             </select>
                         </div>
                         {/* Error sign for article */}
-                        {errors.article && <p className="text-sm text-[#DC2626]">{errors.article.message}</p>}
+                        {/* {errors.article && <p className="text-sm text-[#DC2626]">{errors.article.message}</p>} */}
 
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
@@ -130,9 +117,24 @@ export default function AdminArticlePage() {
 
                 <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
-                        result.map((article, index) => (
-                            <AdminArticleCard key={index} title={article.title} category={article.category.name} date={article.created_at} />
-                        ))
+                        result.length !== 0
+                            ?   result.map((article, index) => (
+                                    <AdminArticleCard key={index} title={article.title} category={article.category.name} date={
+                                        new Date(article.created_at).toLocaleDateString("en-GB", {
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            second: "2-digit"
+                                        })
+                                    } />
+                                ))
+                            :   (
+                                    <div className="flex items-center justify-center w-full h-full">
+                                        <p className="font-semibold text-xl text-black">No Result</p>
+                                    </div>
+                                )
                     }
                 </div>
 
@@ -147,7 +149,7 @@ export default function AdminArticlePage() {
 
                     <div className="flex flex-row items-center justify-center lg:w-[200px]">
                         <div className="flex items-center justify-center w-[50px] h-[50px]">1</div>
-                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">2</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">{  }</div>
                         <div className="flex items-center justify-center w-[50px] h-[50px]">3</div>
                     </div>
 

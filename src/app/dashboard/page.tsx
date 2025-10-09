@@ -1,7 +1,6 @@
 "use client";
 
 import z from "zod";
-import WithAuth from "@/components/with-auth";
 import ArticleCard from "@/components/article-card";
 import DashboardProfilePopup from "@/components/popup/dashboard-profile-popup";
 import DashboardLogoutPopup from "@/components/popup/dashboard-logout-popup";

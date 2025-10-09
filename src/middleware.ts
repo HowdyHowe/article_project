@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(req: NextRequest) {
@@ -10,8 +9,12 @@ export default async function middleware(req: NextRequest) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
 
+        console.log("get here okay")
+
         return NextResponse.next();
     } catch (err: unknown) {
+        console.log("get here not okay")
+
         return NextResponse.redirect(new URL("/login", req.url))
     }
 }

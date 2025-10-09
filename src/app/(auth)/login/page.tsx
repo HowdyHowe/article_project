@@ -67,7 +67,7 @@ export default function LoginPage() {
             if (result.statusCode === 200 && result.data.role) {
                 const data = result.data;
 
-                if (data.role === "ADMIN") router.push("/admin")
+                if (data.role === "ADMIN") router.push("/admin/article")
                 if (data.role === "USER") router.push("/dashboard")
             }
         } catch (err: unknown) {

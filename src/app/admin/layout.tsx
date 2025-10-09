@@ -1,6 +1,5 @@
 "use client"
 
-import WithAuth from "@/components/with-auth";
 import LoadingAnimation from "@/components/loading/loading-animation";
 import { useEffect } from "react";
 import { rootState } from "@/store";
@@ -8,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoadingAnimation, showLoadingAnimation } from "@/store/state";
 
-export default WithAuth(function LayoutAdmin({ children }: {children: React.ReactNode}) {
+export default function LayoutAdmin({ children }: {children: React.ReactNode}) {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const loadingAnimation = useSelector((state: rootState) => state.stateData.loadingAnimation);
@@ -29,4 +28,4 @@ export default WithAuth(function LayoutAdmin({ children }: {children: React.Reac
             {children}
         </div>
     )
-})
+}

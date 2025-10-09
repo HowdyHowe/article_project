@@ -1,17 +1,27 @@
 import { setAdminDeleteCategory, setAdminEditCategory } from "@/store/state";
 import { useDispatch } from "react-redux"
 
-export default function AdminCategoryCard() {
+type AdminCardType = {
+    name: string
+    created_at: string
+    updated_at: string
+}
+
+export default function AdminCategoryCard({ name, created_at, updated_at }: AdminCardType) {
     const dispatch = useDispatch();
 
     return (
-        <div className="grid grid-cols-3 w-full h-[75px] border-b-[2px]">
+        <div className="grid grid-cols-4 w-full h-[75px] border-b-[2px]">
             <div className="flex items-center justify-center w-full px-4">
-                <p className="w-full max-h-[3rem] text-center line-clamp-2">Technology</p>
+                <p className="w-full max-h-[3rem] text-center line-clamp-2">{ name }</p>
             </div>
 
             <div className="flex items-center justify-center w-full px-4">
-                <p className="w-full max-h-[3rem] text-center line-clamp-2">April 14, 2025 10:55:12</p>
+                <p className="w-full max-h-[3rem] text-center line-clamp-2">{ created_at }</p>
+            </div>
+
+            <div className="flex items-center justify-center w-full px-4">
+                <p className="w-full max-h-[3rem] text-center line-clamp-2">{ updated_at }</p>
             </div>
 
             <div className="flex items-center justify-center w-full gap-4">

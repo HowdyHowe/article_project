@@ -6,9 +6,8 @@ import { rootState } from "@/store";
 import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoadingAnimation, showLoadingAnimation } from "@/store/state";
-import WithAuth from "@/components/with-auth";
 
-export default WithAuth(function LayoutDashboard({ children }: {children: React.ReactNode}) {
+export default function LayoutDashboard({ children }: {children: React.ReactNode}) {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const loadingAnimation = useSelector((state: rootState) => state.stateData.loadingAnimation);
@@ -29,4 +28,4 @@ export default WithAuth(function LayoutDashboard({ children }: {children: React.
             {children}
         </div>
     )
-})
+}
