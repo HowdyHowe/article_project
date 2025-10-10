@@ -1,19 +1,18 @@
 "use client"
 
 import z from "zod";
-import AdminCategoryCard from "@/components/admin-category-card";
-import { useEffect, useState } from "react";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
-import { rootState } from "@/store";
-import { setAdminAddCategory } from "@/store/state";
 import axiosInstance from "@/components/axios-instance";
+import AdminCategoryCard from "@/components/admin-category-card";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { setAdminAddCategory } from "@/store/state";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 
 const categorySchema = z.object({
-    category: z.string()
+    search: z.string()
 });
 
 type CategoryForm = z.infer<typeof categorySchema>;
@@ -29,13 +28,13 @@ export default function AdminCategoryPage() {
     const {
         register,
         watch,
-        formState: { errors },
     } = useForm<CategoryForm>({
         resolver: zodResolver(categorySchema)
     })
     const [ result, setResult ] = useState<CategoryType[]>([])
     const [ debouncedQuery, setDebouncedQuery] = useState("");
-    const categoryValue = watch("category");
+
+    const categoryValue = watch("search");
     const dispatch = useDispatch();
 
     // debounce timer
@@ -47,15 +46,16 @@ export default function AdminCategoryPage() {
     }, [categoryValue]);
 
     useEffect (() => {
-        async function fetchData() {
-            const result = await axiosInstance.post("/category/searchCategory", data);
+        async function fetchData(data: CategoryForm) {
+            const validateSearch = categorySchema.parse(data);
+            const result = await axiosInstance.post("/category/searchCategory", validateSearch);
             const articles = result.data?.data?.result || []
 
             setResult(articles);
             console.log(articles);
         }
 
-        fetchData();
+        fetchData({ search: debouncedQuery });
     },[debouncedQuery])
 
     return (
@@ -69,7 +69,7 @@ export default function AdminCategoryPage() {
                     <form className="flex flex-row gap-2">
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
-                            <input {...register("category")} type="text" placeholder="Search Category" className="bg-transparent w-full"/>
+                            <input {...register("search")} type="text" placeholder="Search Category" className="bg-transparent w-full"/>
                         </div>
                     </form>
 
@@ -90,7 +90,7 @@ export default function AdminCategoryPage() {
                     <p className="flex items-center justify-center font-semibold">Action</p>
                 </div>
 
-                <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
+                <div className="grid grid-cols-1  w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
                         result.length !== 0
                         ?   result.map((category, index) => (

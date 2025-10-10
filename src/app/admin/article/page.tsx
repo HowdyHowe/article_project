@@ -10,25 +10,30 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
 
-const searchArticleschema = z.object({
-    article     : z.string(),
-    category    : z.string(),
+const searchCategorySchema = z.object({
+    category_id: z.string(),
 })
 
-type ArticleForm = z.infer<typeof searchArticleschema>
+const searchArticleSchema = searchCategorySchema.extend({
+    search: z.string()
+})
+
+type ArticleForm = z.infer<typeof searchArticleSchema>
+
+type CategoryType = {
+    category_id : string,
+    name        : string,
+    created_at  : string,
+    updated_at  : string,
+}
 
 type ArticleType = {
     article_id  : string,
     title       : string,
     content     : string,
     created_at  : string,
-    updated_at  : string
-    category    : {
-        category_id : string,
-        name        : string,
-        created_at  : string,
-        updated_at  : string,
-    },
+    updated_at  : string,
+    category    : CategoryType,
     author      : {
         user_id     : string,
         username    : string,
@@ -36,41 +41,40 @@ type ArticleType = {
 }
 
 export default function AdminArticlePage() {
-    const {
-        register,
-        watch,
-        formState: { errors }
-    } = useForm<ArticleForm>({
-        resolver: zodResolver(searchArticleschema)
-    });
-    const [ debouncedQuery, setDebouncedQuery ] = useState({
-        article: "",
-        category: ""
-    });
-    const [ result, setResult ] = useState<ArticleType[]>([]);
+    const { register, watch } = useForm<ArticleForm>({ resolver: zodResolver(searchArticleSchema) });
+    const [ debouncedQuery, setDebouncedQuery ] = useState({ search: "", category_id: "" });
+    const [ categoryResult, setCategoryResult ] = useState<CategoryType[]>([])
+    const [ articleResult, setArticleResult ] = useState<ArticleType[]>([]);
+    const [ page, setPage ] = useState({ curpage: 1, totalPage: 1 })
+
     const router = useRouter();
-    const articleValue = watch("article");
-    const categoryValue = watch("category");
+    const articleValue = watch("search");
+    const categoryValue = watch("category_id");
 
     // debouce timer
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedQuery({
-                article: articleValue,
-                category: categoryValue,
+                search: articleValue,
+                category_id: categoryValue,
             });
         }, 500);
         return () => clearTimeout(timer);
     }, [articleValue, categoryValue])
 
     useEffect(() => {
-        async function fetchData () {
-            const result = await axiosInstance.get("/article/searchArticle")
-            const articles = result.data?.data?.result || []
-            setResult(articles);
+        async function fetchData (searchArticle: ArticleForm) {
+            const articleSearch = searchArticleSchema.parse(searchArticle);
+            const articleResult = await axiosInstance.post("/article/searchArticle", articleSearch);
+            const categoryResult = await axiosInstance.post("/category/searchCategory");
+            const category = categoryResult.data?.data?.result || [];
+            const articles = articleResult.data?.data?.result || [];
+            setPage({ curpage: articleResult.data?.data?.page, totalPage: articleResult.data?.data?.total_page })
+            setCategoryResult(category);
+            setArticleResult(articles);
         }
 
-        fetchData();
+        fetchData(debouncedQuery);
     }, [debouncedQuery])
 
     return (
@@ -82,12 +86,19 @@ export default function AdminArticlePage() {
                 <div className="flex flex-row items-center justify-between w-full h-[100px] px-4 border-b">
                     <form  className="flex flex-row gap-2">
                         <div className="flex items-center justify-center w-[125px] h-[40px] px-2 border rounded-lg">
-                            <select  {...register("category")} className="w-full bg-transparent">
-                                <option value="">All</option>
+                            <select  {...register("category_id")} className="w-full bg-transparent">
+                                {/* <option value="">All</option>
                                 <option value="contoh1">contoh1</option>
                                 <option value="contoh2">contoh2</option>
                                 <option value="depan">depan</option>
-                                <option value="contoh3">contoh3</option>
+                                <option value="contoh3">contoh3</option> */}
+                                <option value="">All Categories</option>
+                                {
+                                    categoryResult.map((category, index) => (
+                                        <option key={index} value={category.category_id}>{ category.name }</option>
+                                    ))
+
+                                }
                             </select>
                         </div>
                         {/* Error sign for article */}
@@ -95,7 +106,7 @@ export default function AdminArticlePage() {
 
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
-                            <input {...register("article")} type="text" placeholder="Search Article" className="bg-transparent"/>
+                            <input {...register("search")} type="text" placeholder="Search Article" className="bg-transparent"/>
                         </div>
                     </form>
 
@@ -117,8 +128,8 @@ export default function AdminArticlePage() {
 
                 <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
-                        result.length !== 0
-                            ?   result.map((article, index) => (
+                        articleResult.length !== 0
+                            ?   articleResult.map((article, index) => (
                                     <AdminArticleCard key={index} title={article.title} category={article.category.name} date={
                                         new Date(article.created_at).toLocaleDateString("en-GB", {
                                             day: "numeric",
@@ -148,9 +159,9 @@ export default function AdminArticlePage() {
                     </div>
 
                     <div className="flex flex-row items-center justify-center lg:w-[200px]">
-                        <div className="flex items-center justify-center w-[50px] h-[50px]">1</div>
-                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">{  }</div>
-                        <div className="flex items-center justify-center w-[50px] h-[50px]">3</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px]">{ page.curpage - 1 <= 0 ? "" : page.curpage - 1 }</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">{ page.curpage }</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px]">{ page.totalPage }</div>
                     </div>
 
                     <div className="flex flex-row items-center justify-center w-[100px]">

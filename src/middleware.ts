@@ -10,6 +10,7 @@ export default async function middleware(req: NextRequest) {
         }
 
         console.log("get here okay")
+        console.log(token)
 
         return NextResponse.next();
     } catch (err: unknown) {
