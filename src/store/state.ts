@@ -8,11 +8,13 @@ interface stateData{
     adminAddCategory: boolean;
     adminEditCategory: boolean;
     adminDeleteCategory: boolean;
-    dashboardLogout: boolean,
-    dashboardProfile: boolean,
+    dashboardLogout: boolean;
+    dashboardProfile: boolean
     // extra widget
-    alertAnimation: boolean,
-    loadingAnimation: boolean
+    alertAnimation: boolean;
+    loadingAnimation: boolean;
+    // category admin callout
+    callCategoryValue: boolean;
 };
 
 const initialState: stateData = {
@@ -25,7 +27,8 @@ const initialState: stateData = {
     dashboardLogout: false,
     dashboardProfile: false,
     alertAnimation: false,
-    loadingAnimation: false
+    loadingAnimation: false,
+    callCategoryValue: false,
 };
 
 const stateDataSlice = createSlice({
@@ -68,9 +71,12 @@ const stateDataSlice = createSlice({
         hideLoadingAnimation: (state) => {
             state.loadingAnimation = false;
         },
+        setAdminCallCategoryValue: (state) => {
+            state.callCategoryValue = !state.callCategoryValue
+        },
         reset: () => initialState,
     }
 });
 
-export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, setDashboardLogout, setDashboardProfile, showAlertAnimation, hideAlertAnimation, showLoadingAnimation, hideLoadingAnimation, reset } = stateDataSlice.actions;
+export const { setAdminPage, setAdminLogout, setAdminDeleteArticle, setAdminAddCategory, setAdminEditCategory, setAdminDeleteCategory, setDashboardLogout, setDashboardProfile, showAlertAnimation, hideAlertAnimation, showLoadingAnimation, hideLoadingAnimation, setAdminCallCategoryValue, reset } = stateDataSlice.actions;
 export default stateDataSlice.reducer;

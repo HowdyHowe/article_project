@@ -3,13 +3,14 @@
 import z from "zod";
 import axiosInstance from "@/components/axios-instance";
 import AdminCategoryCard from "@/components/admin-category-card";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { setAdminAddCategory } from "@/store/state";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LuChevronLeft, LuChevronRight, LuPlus } from "react-icons/lu";
+import { rootState } from "@/store";
 
 const categorySchema = z.object({
     search: z.string()
@@ -34,6 +35,7 @@ export default function AdminCategoryPage() {
     const [ result, setResult ] = useState<CategoryType[]>([])
     const [ debouncedQuery, setDebouncedQuery] = useState("");
 
+    const callCategoryValue = useSelector((state: rootState) => state.stateData.callCategoryValue);
     const categoryValue = watch("search");
     const dispatch = useDispatch();
 
@@ -43,7 +45,7 @@ export default function AdminCategoryPage() {
             setDebouncedQuery(categoryValue);
         }, 500);
         return () => clearTimeout(timer);
-    }, [categoryValue]);
+    }, [callCategoryValue]);
 
     useEffect (() => {
         async function fetchData(data: CategoryForm) {

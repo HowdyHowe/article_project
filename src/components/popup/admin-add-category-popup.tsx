@@ -5,7 +5,7 @@ import AlertAnimation from "../alert-animation";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react"
-import { reset, setAdminAddCategory } from "@/store/state";
+import { reset, setAdminAddCategory, setAdminCallCategoryValue } from "@/store/state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
@@ -53,6 +53,7 @@ export default function AdminAddCategoryPopup({ show }: AdminAddCategoryPopupPro
             if (result.statusCode === 200) {
                 resetField("name");
                 dispatch(reset());
+                dispatch(setAdminCallCategoryValue());
                 return showAlert("Category successfully created", "success");
             }
 
@@ -87,7 +88,7 @@ export default function AdminAddCategoryPopup({ show }: AdminAddCategoryPopupPro
 
                 <p className="text-2xl font-semibold">Add Category</p>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-                    <label className="my-2 font-semibold">Category</label>
+                    <label className="font-semibold">Category</label>
                     <div className="flex items-center justify-start w-full h-[40px] pl-4 border rounded-md">
                         <input {...register("name")} type="text" className="w-full bg-transparent" placeholder="Input Category"/>
                     </div>
