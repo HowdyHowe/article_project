@@ -2,7 +2,7 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3030",
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
     validateStatus: () => true

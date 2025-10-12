@@ -90,7 +90,7 @@ export default function AdminCategoryPage() {
                     <p className="flex items-center justify-center font-semibold">Action</p>
                 </div>
 
-                <div className="grid grid-cols-1  w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
+                <div className="flex flex-col  w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
                         result.length !== 0
                         ?   result.map((category, index) => (

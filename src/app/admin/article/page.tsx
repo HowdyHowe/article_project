@@ -69,6 +69,7 @@ export default function AdminArticlePage() {
             const categoryResult = await axiosInstance.post("/category/searchCategory");
             const category = categoryResult.data?.data?.result || [];
             const articles = articleResult.data?.data?.result || [];
+
             setPage({ curpage: articleResult.data?.data?.page, totalPage: articleResult.data?.data?.total_page })
             setCategoryResult(category);
             setArticleResult(articles);
@@ -85,13 +86,8 @@ export default function AdminArticlePage() {
                 </div>
                 <div className="flex flex-row items-center justify-between w-full h-[100px] px-4 border-b">
                     <form  className="flex flex-row gap-2">
-                        <div className="flex items-center justify-center w-[125px] h-[40px] px-2 border rounded-lg">
+                        <div className="flex items-center justify-center w-[150px] h-[40px] px-2 border rounded-lg">
                             <select  {...register("category_id")} className="w-full bg-transparent">
-                                {/* <option value="">All</option>
-                                <option value="contoh1">contoh1</option>
-                                <option value="contoh2">contoh2</option>
-                                <option value="depan">depan</option>
-                                <option value="contoh3">contoh3</option> */}
                                 <option value="">All Categories</option>
                                 {
                                     categoryResult.map((category, index) => (
@@ -101,9 +97,6 @@ export default function AdminArticlePage() {
                                 }
                             </select>
                         </div>
-                        {/* Error sign for article */}
-                        {/* {errors.article && <p className="text-sm text-[#DC2626]">{errors.article.message}</p>} */}
-
                         <div className="flex items-center justify-start w-[250px] h-[40px] px-4 border rounded-lg">
                             <FaMagnifyingGlass size={13} className="mr-2 text-[#aeaeaf]"/>
                             <input {...register("search")} type="text" placeholder="Search Article" className="bg-transparent"/>
@@ -126,7 +119,7 @@ export default function AdminArticlePage() {
                     <p className="flex items-center justify-center font-semibold">Action</p>
                 </div>
 
-                <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
+                <div className="flex flex-col w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
                         articleResult.length !== 0
                             ?   articleResult.map((article, index) => (
@@ -159,9 +152,9 @@ export default function AdminArticlePage() {
                     </div>
 
                     <div className="flex flex-row items-center justify-center lg:w-[200px]">
-                        <div className="flex items-center justify-center w-[50px] h-[50px]">{ page.curpage - 1 <= 0 ? "" : page.curpage - 1 }</div>
-                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">{ page.curpage }</div>
-                        <div className="flex items-center justify-center w-[50px] h-[50px]">{ page.totalPage }</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px]">{ page.curpage - 1 <= 0 || !Number.isNaN(page.curpage) ? "" : page.curpage - 1 }</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px] border rounded-lg">{ page.curpage || 1 }</div>
+                        <div className="flex items-center justify-center w-[50px] h-[50px]">{ page.curpage + 1 > page.totalPage || !Number.isNaN(page.curpage) ? "" : page.curpage + 1 }</div>
                     </div>
 
                     <div className="flex flex-row items-center justify-center w-[100px]">

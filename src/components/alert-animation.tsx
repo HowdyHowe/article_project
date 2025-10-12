@@ -23,7 +23,7 @@ export default function AlertAnimation({ message, show, type }: AlertAnimationTy
                 animate={ { opacity: 1, y: 0 } }
                 exit={ { opacity: 0, y: -40 } }
                 transition={ { duration: 0.3 } }
-                className="absolute top-[10px]"
+                className="absolute top-[10px] z-50"
             >
                 <div className={`flex items-center justify-center text-center w-[200px] h-[50px] text-white rounded-lg ${
                     type === "success"

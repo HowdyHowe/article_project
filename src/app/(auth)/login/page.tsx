@@ -25,21 +25,11 @@ type AlertType = {
 }
 
 export default function LoginPage() {
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
+    const [ alert, setAlert ] = useState<AlertType>({ message: "", show: false,type: "error"});
     const [ visible, setVisible ] = useState(false);
-    const [ alert, setAlert ] = useState<AlertType>({
-        message: "",
-        show: false,
-        type: "error"
-    });
-    const dispatch = useDispatch();
     const router = useRouter();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginForm>({
-        resolver: zodResolver(loginSchema),
-    });
+    const dispatch = useDispatch();
 
     const showAlert = (mes: string, type: string) => {
         setAlert({
@@ -50,7 +40,7 @@ export default function LoginPage() {
         setTimeout(() => {
             setAlert((prev) => ({...prev, show: false}))
         }, 3000);
-    }
+    };
 
     const onSubmit = async (data: LoginForm) => {
         try {
