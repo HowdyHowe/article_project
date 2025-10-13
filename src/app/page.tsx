@@ -1,16 +1,15 @@
-import { cookies } from "next/headers";
+
+import { NextRequest } from "next/server";
 import { redirect } from "next/navigation";
-import { useDispatch } from "react-redux";
 
-export default async function Home() {
-  // const cookieStore = await cookies();
-  // const token = cookieStore.get("accessToken")?.value;
-  // const role = cookieStore.get("role")?.value;
-
+export default async function Home(req: NextRequest) {
   // try {
+  //   const token = req.cookies.get("accessToken");
+  //   const role = req.cookies.get("role");
+
+  //   console.log(role)
+
   //   if (!token) {
-  //     cookieStore.delete("accessToken");
-  //     cookieStore.delete("role");
   //     redirect("/login");
   //   }
   //   if (role === "User") {
@@ -22,15 +21,9 @@ export default async function Home() {
   // } catch (err) {
   //   console.error("Routing Error: ", err)
 
-  //   cookieStore.delete("accessToken");
-  //   cookieStore.delete("role");
   //   redirect("/login");
   // }
-  redirect("/login")
+  // redirect("/login")
 
-  return (
-    <div>
-      loading...
-    </div>
-  );
+  return null;
 }

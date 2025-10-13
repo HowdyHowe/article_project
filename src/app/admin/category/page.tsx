@@ -30,7 +30,7 @@ export default function AdminCategoryPage() {
         register,
         watch,
     } = useForm<CategoryForm>({
-        resolver: zodResolver(categorySchema)
+        resolver: zodResolver(categorySchema), defaultValues: {search: ""}
     })
     const [ result, setResult ] = useState<CategoryType[]>([])
     const [ debouncedQuery, setDebouncedQuery] = useState("");
@@ -45,7 +45,7 @@ export default function AdminCategoryPage() {
             setDebouncedQuery(categoryValue);
         }, 500);
         return () => clearTimeout(timer);
-    }, [callCategoryValue]);
+    }, [categoryValue]);
 
     useEffect (() => {
         async function fetchData(data: CategoryForm) {
@@ -58,7 +58,7 @@ export default function AdminCategoryPage() {
         }
 
         fetchData({ search: debouncedQuery });
-    },[debouncedQuery])
+    },[debouncedQuery, callCategoryValue])
 
     return (
         <div className="flex flex-col items-center justify-center w-full h-full pt-[75px]">
@@ -92,7 +92,7 @@ export default function AdminCategoryPage() {
                     <p className="flex items-center justify-center font-semibold">Action</p>
                 </div>
 
-                <div className="flex flex-col  w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
+                <div className="grid grid-cols-1 w-full min-h-[60%] overflow-auto scrollbar-thin scrollbar-thumb-[#2563EB] scrollbar-track-transparent">
                     {
                         result.length !== 0
                         ?   result.map((category, index) => (
